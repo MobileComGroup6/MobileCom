@@ -2,3 +2,6 @@
 /
 /conf/
 *.asv
+*.aux
+*.log
+*.gz
