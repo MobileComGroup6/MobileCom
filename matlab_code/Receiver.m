@@ -1,11 +1,8 @@
 classdef Receiver < Node
 %Properties
-    properties
-       P_n;
-    end
-    
     %private class properties.
     properties(Access = private)
+        P_n
         Demodulator
     end
 
@@ -25,7 +22,6 @@ classdef Receiver < Node
             data = self.Demodulator.step(mData);
             % despread data
             data_despreaded = self.despread(data);
-            % write data to medium
             disp('Received data:');
             disp(data_despreaded);
         end

@@ -1,7 +1,7 @@
 classdef Medium < handle %handle is superclass and provides event machanisms
 %Properties
     %private class properties.
-    properties(SetAccess = private, GetAccess = private)
+    properties(Access = private)
         Data
     end
     

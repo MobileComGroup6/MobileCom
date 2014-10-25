@@ -1,7 +1,7 @@
 classdef Sender < SendingNode
 %Properties
-    properties
-       P_n;
+    properties(Access = private)
+       P_n
     end
 
 %Methods
