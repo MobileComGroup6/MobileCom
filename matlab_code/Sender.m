@@ -1,61 +1,35 @@
-%sample class to test object oriented programming in matlab
-%documentatin: http://www.mathworks.ch/ch/help/matlab/object-oriented-programming.html
-
-%Classnames are Upper Case and CamelCase
-classdef Sender < handle %handle is superclass and provides event machanisms
-%Properties    
-    %define class properties
-    %Property names are Upper Case and CamelCase
+classdef Sender < SendingNode
+%Properties
     properties
-       MessageContent = 'test content'; %init default value. Will be overwriten by constructor.
+       P_n;
     end
-    
-    %static properties
-    properties(Constant = true)
-        ClassName = 'Sender';
-    end    
-    %private class properties. Other property attributes see http://www.mathworks.ch/ch/help/matlab/matlab_oop/property-attributes.html#brjjwcj-1
-    properties(SetAccess = private, GetAccess = private)
-        RandPattern
-    end
-    
+
 %Methods
-    %define class methods
     methods
-        
         %class constructor
-        function obj = Sender(pattern)
-            obj.RandPattern = pattern;
-        end
+        function self = Sender(medium, p_n)
+            self.Medium = medium;
+            self.Modulator = comm.BPSKModulator;
+            self.P_n = p_n;
+        end        
         
-        %these getters and setters are automaticaly called when assigning
-            %or querying the property.
-        %getter
-        function content = get.MessageContent(object)
-            content = object.MessageContent;
-            'debug: MessageContent has been queried'
-        end
-        %setter
-        function obj = set.MessageContent(obj, content)
-           obj.MessageContent = content; 
-           strcat('debug: MessageContent has been set to: ', content)
-        end
-        
-        function send(obj)
-            strcat('Sending message: ', MessageContent)
-            notify(obj, 'MessageSent');
+        function send(self, data)
+            disp('Sending data:');
+            disp(data);
+            % spread data
+            data_spreaded = self.spread(data);
+            % modulate data
+            mData = self.Modulator.step(data_spreaded);
+            % write data to medium
+            self.Medium.write(mData);
         end
     end
     
-    methods(Static = true)
-        function  printClassName()
-           strcat('Class name is: ', Sender.ClassName)
+    methods (Access=private)
+        function data_spreaded = spread(~, data)
+            % TODO: implement spreading
+            data_spreaded = data;
         end
-    end 
-    
-%Events
-    events
-        MessageSent
     end
     
 end
