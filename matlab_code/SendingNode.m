@@ -1,7 +1,7 @@
 classdef SendingNode < Node
 %Properties
     %protected class properties.
-    properties(Access = protected)
+    properties (Access = protected)
         Modulator
     end
     

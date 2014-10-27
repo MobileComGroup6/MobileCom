@@ -1,7 +1,5 @@
-classdef Jammer < SendingNode
-    
+classdef Jammer < SendingNode   
 %Methods
-    
     methods
         %class constructor
         function self = Jammer(medium)

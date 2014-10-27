@@ -1,7 +1,7 @@
 classdef Receiver < Node
 %Properties
     %private class properties.
-    properties(Access = private)
+    properties (Access = private)
         P_n
         Demodulator
     end
