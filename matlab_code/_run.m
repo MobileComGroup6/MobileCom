@@ -1,7 +1,10 @@
 clear all
 
 medium = Medium;
-p_n = [1;0;1]; % TODO: use P_n generator from comm package
+pnGenerator = comm.PNSequence;
+% Set chip length to 100
+pnGenerator.SamplesPerFrame = 100;
+p_n = pnGenerator.step();
 
 sender = Sender(medium, p_n);
 receiver = Receiver(medium, p_n);
