@@ -1,11 +1,101 @@
-%creates a new column in the "index header" of each slide
 \section{DSSS}
-	%creates a dot in the "index header" of each slide
 	\subsection{DSSS}
-		%create a new "page with title DSSS
-		\begin{frame}{DSSS}
+		\begin{frame}{Direct Sequence Spread Spectrum}{Data}
 			\begin{itemize}
-				\item
-				test
+				\item<1->
+				Let the data $d_t \in \{-1,1\}^n$ be $d_t = [1,-1]$	
+				\item<2->
+				Signal bandwidth $R_s$ 
 			\end{itemize}
+			
+			\vspace{20pt}
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/dsss_ft_1.png}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{Direct Sequence Spread Spectrum}{Chip Sequence}
+			\begin{itemize}
+				\item<1->
+				Define chip sequence. Let the sequence $p_n \in \{-1,1\}^n$ be  $d_t = [1,1,1,-1,1,-1,-1,1,1,1,-1,1,-1,-1]$	
+				\item<2->
+				Signal bandwidth $R_c$ with $R_c > R_s$. 
+				\item<3->
+				$p_n$ is known to sender and receiver only
+				\item<4->
+				Sender and receiver are synchronized
+			\end{itemize}
+		
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/dsss_ft_2.png}
+			\end{figure}
+		\end{frame}	
+		
+		\begin{frame}{Direct Sequence Spread Spectrum}{Spreading}
+			\begin{itemize}
+				\item<1->
+				Point-wise multiply the data with chip sequence. $t_x = d_t p_n$
+				\item<2->
+				Bandwidth of transmitted signal is $R_c$, the chip sequence's bandwidth.
+				\item<3->
+				For transmission apply some phase modulation
+			\end{itemize}
+			
+			\vspace{20pt}
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/dsss_ft_3.png}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{Direct Sequence Spread Spectrum}{Spreading}
+			\begin{itemize}
+				\item<1->
+				Point-wise multiply the signal with chip sequence. $d_r = t_x p_n = d_t p_n p_n = d_t$
+				
+				\item<2->
+				This returns the original data since $p_n p_n = [0,0,...]$
+			\end{itemize}
+			
+			\vspace{20pt}
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/dsss_ft_1.png}
+			\end{figure}
+		\end{frame}
+
+	\subsection{Interference}
+		\begin{frame}{Interference}{Narrow-band Interference}
+			\begin{itemize}
+				\item<1->
+				Narrowband interference is spread in the despreading part
+				\item<1->
+				Remember: spreading and despreading is the same operation 
+				
+				\item<2->
+				Does not lower the SNR too much
+			\end{itemize}
+			
+			\vspace{20pt}
+				
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/dsss_inter_nar.png}
+			\end{figure}
+		\end{frame}	
+		
+		\begin{frame}{Interference}{Broad-band Interference}
+			\begin{itemize}
+				\item<1->
+				Despreading does not change the broad-band noise, it is uncorrelated with $p_n$. It's bandwidth remains the same.
+				
+				\item<2->
+				Can affect the SNR. 
+				
+				\item<3->
+				Transmissions of other users are received as broadband noise
+			\end{itemize}
+			
+			\vspace{20pt}
+			
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/dsss_inter_broad.png}
+			\end{figure}
 		\end{frame}	

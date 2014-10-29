@@ -1,28 +1,51 @@
 \beamer@endinputifotherversion {3.33pt}
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
-\headcommand {\sectionentry {1}{DSSS}{2}{DSSS}{0}}
+\headcommand {\sectionentry {1}{Spread Spectrum}{2}{Spread Spectrum}{0}}
 \headcommand {\beamer@sectionpages {1}{1}}
 \headcommand {\beamer@subsectionpages {1}{1}}
-\headcommand {\beamer@subsectionentry {0}{1}{1}{2}{DSSS}}\headcommand {\beamer@subsectionpages {2}{1}}
-\headcommand {\slideentry {1}{1}{1}{2/4}{DSSS}{0}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{2}{Spread Spectrum}}\headcommand {\beamer@subsectionpages {2}{1}}
+\headcommand {\slideentry {1}{1}{1}{2/4}{Spread Spectrum}{0}}
 \headcommand {\beamer@framepages {2}{4}}
-\headcommand {\slideentry {1}{1}{2}{5/6}{DSSS}{0}}
+\headcommand {\sectionentry {2}{DSSS}{5}{DSSS}{0}}
+\headcommand {\beamer@sectionpages {2}{4}}
+\headcommand {\beamer@subsectionpages {2}{4}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{5}{DSSS}}\headcommand {\beamer@subsectionpages {5}{4}}
+\headcommand {\slideentry {2}{1}{1}{5/6}{DSSS}{0}}
 \headcommand {\beamer@framepages {5}{6}}
-\headcommand {\sectionentry {2}{DSSS}{7}{DSSS}{0}}
-\headcommand {\beamer@sectionpages {2}{6}}
-\headcommand {\beamer@subsectionpages {2}{6}}
-\headcommand {\beamer@subsectionentry {0}{2}{1}{7}{DSSS}}\headcommand {\beamer@subsectionpages {7}{6}}
-\headcommand {\slideentry {2}{1}{1}{7/7}{DSSS}{0}}
-\headcommand {\beamer@framepages {7}{7}}
-\headcommand {\sectionentry {3}{FHSS}{8}{FHSS}{0}}
-\headcommand {\beamer@sectionpages {7}{7}}
-\headcommand {\beamer@subsectionpages {7}{7}}
-\headcommand {\beamer@subsectionentry {0}{3}{1}{8}{FHSS}}\headcommand {\beamer@subsectionpages {8}{7}}
-\headcommand {\slideentry {3}{1}{1}{8/8}{FHSS}{0}}
-\headcommand {\beamer@framepages {8}{8}}
-\headcommand {\beamer@partpages {1}{8}}
-\headcommand {\beamer@subsectionpages {8}{8}}
-\headcommand {\beamer@sectionpages {8}{8}}
-\headcommand {\beamer@documentpages {8}}
-\headcommand {\def \inserttotalframenumber {5}}
+\headcommand {\slideentry {2}{1}{2}{7/10}{DSSS}{0}}
+\headcommand {\beamer@framepages {7}{10}}
+\headcommand {\slideentry {2}{1}{3}{11/13}{DSSS}{0}}
+\headcommand {\beamer@framepages {11}{13}}
+\headcommand {\slideentry {2}{1}{4}{14/15}{DSSS}{0}}
+\headcommand {\beamer@framepages {14}{15}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{16}{Interference}}\headcommand {\beamer@subsectionpages {5}{15}}
+\headcommand {\slideentry {2}{2}{1}{16/17}{Interference}{0}}
+\headcommand {\beamer@framepages {16}{17}}
+\headcommand {\slideentry {2}{2}{2}{18/20}{Interference}{0}}
+\headcommand {\beamer@framepages {18}{20}}
+\headcommand {\sectionentry {3}{FHSS}{21}{FHSS}{0}}
+\headcommand {\beamer@sectionpages {5}{20}}
+\headcommand {\beamer@subsectionpages {16}{20}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{21}{FHSS}}\headcommand {\beamer@subsectionpages {21}{20}}
+\headcommand {\slideentry {3}{1}{1}{21/25}{FHSS}{0}}
+\headcommand {\beamer@framepages {21}{25}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{26}{Example}}\headcommand {\beamer@subsectionpages {21}{25}}
+\headcommand {\slideentry {3}{2}{1}{26/30}{Example}{0}}
+\headcommand {\beamer@framepages {26}{30}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{31}{Interference}}\headcommand {\beamer@subsectionpages {26}{30}}
+\headcommand {\slideentry {3}{3}{1}{31/33}{Interference}{0}}
+\headcommand {\beamer@framepages {31}{33}}
+\headcommand {\sectionentry {4}{DSSS}{34}{DSSS}{0}}
+\headcommand {\beamer@sectionpages {21}{33}}
+\headcommand {\beamer@subsectionpages {31}{33}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{34}{DSSS}}\headcommand {\beamer@subsectionpages {34}{33}}
+\headcommand {\slideentry {4}{1}{1}{34/36}{DSSS}{0}}
+\headcommand {\beamer@framepages {34}{36}}
+\headcommand {\slideentry {4}{1}{2}{37/38}{DSSS}{0}}
+\headcommand {\beamer@framepages {37}{38}}
+\headcommand {\beamer@partpages {1}{38}}
+\headcommand {\beamer@subsectionpages {34}{38}}
+\headcommand {\beamer@sectionpages {34}{38}}
+\headcommand {\beamer@documentpages {38}}
+\headcommand {\def \inserttotalframenumber {13}}
