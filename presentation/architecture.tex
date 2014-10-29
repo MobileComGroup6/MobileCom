@@ -1,0 +1,84 @@
+%creates a new column in the "index header" of each slide
+\section{Architecture}
+	%creates a dot in the "index header" of each slide
+	\subsection{Architecture}
+		%create a new "page with title Architecture
+		\begin{frame}{Architecture}
+			\begin{itemize}
+				\item<1->
+				Object-oriented  Matlab
+				
+				\item<2->
+				Modulation using Communications System Toolbox
+			\end{itemize}
+    		\twoblocks{0.5}{0.5}{
+    			\begin{figure}
+    				\includegraphics<3->[width=\textwidth,keepaspectratio]{imgs/dsss_arch.png}
+    			\end{figure}
+    		}{
+    			\begin{figure}
+    				\includegraphics<3->[width=\textwidth,keepaspectratio]{imgs/fhss_arch.png}
+    			\end{figure}
+    		}
+		\end{frame}
+		
+		\begin{frame}{UML}
+			\begin{figure}
+				\includegraphics<1->[width=\textwidth,keepaspectratio]{imgs/uml.png}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{Simulation}
+			\begin{itemize}
+				\item<1->
+				DSSS:
+				\begin{itemize}
+				    \item Phase modulation - BPSK modulation scheme
+				\end{itemize}
+				
+				\item<2->
+				FHSS:
+				\begin{itemize}
+				    \item Frequency modulation - FSK modulation scheme
+				\end{itemize}
+				
+				\item<3->
+				Add interferences and noise on the medium
+				\begin{itemize}
+    				\item Gaussian noise
+                    \item Broadband noise
+                    \item Narrow band noise
+				\end{itemize}
+				
+				\item<4->
+				Different chip rates in FHSS - Fast \& slow hopping
+				
+				\item<5->
+				Different chip sequence length
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{Metrics}
+			\begin{itemize}
+				\item<1->
+				Bit-error rate
+				
+				\item<2->
+				Packet-error rate
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{Roadmap}
+			\begin{itemize}
+				\item<1->
+				Basic structure is done
+				
+				\item<2->
+				Next steps:
+				\begin{itemize}
+    				\item<2-> Implement spreading \& despreading
+    				\item<3-> Add noise and inteferences
+    				\item<4-> Collect \& analyze results
+				\end{itemize}
+			\end{itemize}
+		\end{frame}
