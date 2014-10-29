@@ -1,0 +1,63 @@
+\documentclass{beamer}
+%\documentclass[handout]{beamer}
+\mode<presentation>{
+	\usetheme{Singapore}
+	\usecolortheme{seagull}
+	\setbeamercovered{transparent}
+}
+
+%packages
+	\usepackage[english]{babel}
+	\usepackage[utf8]{inputenc}
+
+	\usepackage{multimedia}
+	\usepackage{mathtools}
+	\usepackage{paratype}
+	\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+	\usepackage[T1]{fontenc}
+
+%definitions
+	\def \image_height{6.5cm}
+	\newcommand<>{\fig}[1]{\newline {\scriptsize \itshape #1}}
+	\graphicspath{{pics/}}
+
+\title{Mobile Communication}
+	\subtitle{DSSS and FHSS intermediate presentation} 
+	\author{Group 6} 
+
+\definecolor{orange}{RGB}{215,47,0}
+\definecolor{green}{RGB}{0,100,0}
+\definecolor{blue}{RGB}{0,17,167}
+\definecolor{red}{RGB}{175,0,0}
+
+%Logo
+	\pgfdeclareimage[height=0.5cm]{university-logo}{imgs/unibe.png}
+	\logo{\pgfuseimage{university-logo}}
+
+%\newcommand{\twoblocks}[4]{
+%	\begin{columns}
+%		\begin{column}{#1\textwidth}
+%			#3
+%		\end{column}
+%		\begin{column}{#2\textwidth}
+%			#4
+%		\end{column}
+%	\end{columns}
+%	
+%}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	
+%Include different sectins here
+  \include{examples}
+  \include{dsss}
+  \include{fhss}
+  			
+\end{document}
+
+
