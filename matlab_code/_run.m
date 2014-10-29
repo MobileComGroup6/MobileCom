@@ -1,14 +1,14 @@
 clear all
 
 medium = Medium;
-pnGenerator = comm.PNSequence;
-% Set chip length to 100
-pnGenerator.SamplesPerFrame = 100;
-p_n = pnGenerator.step();
+pnGenerator = PNGenerator(100);
 
-sender = Sender(medium, p_n);
-receiver = Receiver(medium, p_n);
+sender = Sender(medium, pnGenerator, 'dsss');
+receiver = Receiver(medium, pnGenerator, 'dsss');
 jammer = Jammer(medium);
 
-sender.send([1;0;0;1;0]);
-receiver.receive();
+for k = 1:3
+    disp(['Test ', num2str(k), ':']);
+    sender.send(randi([0,1],5,1));
+    receiver.receive();
+end

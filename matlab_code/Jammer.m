@@ -1,4 +1,9 @@
-classdef Jammer < SendingNode   
+classdef Jammer < SendingNode
+%Properties
+    properties (Access = private)
+        Modulator
+    end    
+    
 %Methods
     methods
         %class constructor
