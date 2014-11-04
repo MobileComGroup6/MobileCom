@@ -54,17 +54,7 @@ classdef Receiver < Node
         function data_despreaded = DSSSDespread(self, data)
             % Get the current Pn sequence
             pn = self.pnGenerator.Pn;
-            if size(pn,1) < size(data,1)
-                error('Pn is shorter than the data.');
-            end
-            pn = pn(1:size(data));
-            % Replace 0 by -1 to make the spreading work
-            data(data==0) = -1;
-            pn(pn==0) = -1;
-            % Multiply the data with the Pn sequence
-            data_despreaded = data .* pn;
-            % Change back -1 to 0
-            data_despreaded(data_despreaded==-1) = 0;
+            data_despreaded = xor(data, pn);
         end
         
         function data_despreaded = FHSSDespread(self, mData, channelNr)
@@ -77,9 +67,6 @@ classdef Receiver < Node
             pn = self.pnGenerator.Pn;
             numOfChannels = self.FSKDemodulator.ModulationOrder;
             l = log2(numOfChannels);
-            if size(pn,1) < l
-                error('Pn is too short to encode all channels.');
-            end
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));
         end
