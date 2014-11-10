@@ -36,16 +36,24 @@
 \headcommand {\beamer@subsectionentry {0}{3}{3}{31}{Interference}}\headcommand {\beamer@subsectionpages {26}{30}}
 \headcommand {\slideentry {3}{3}{1}{31/33}{Interference}{0}}
 \headcommand {\beamer@framepages {31}{33}}
-\headcommand {\sectionentry {4}{DSSS}{34}{DSSS}{0}}
+\headcommand {\sectionentry {4}{Architecture}{34}{Architecture}{0}}
 \headcommand {\beamer@sectionpages {21}{33}}
 \headcommand {\beamer@subsectionpages {31}{33}}
-\headcommand {\beamer@subsectionentry {0}{4}{1}{34}{DSSS}}\headcommand {\beamer@subsectionpages {34}{33}}
-\headcommand {\slideentry {4}{1}{1}{34/36}{DSSS}{0}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{34}{Architecture}}\headcommand {\beamer@subsectionpages {34}{33}}
+\headcommand {\slideentry {4}{1}{1}{34/36}{Architecture}{0}}
 \headcommand {\beamer@framepages {34}{36}}
-\headcommand {\slideentry {4}{1}{2}{37/38}{DSSS}{0}}
-\headcommand {\beamer@framepages {37}{38}}
-\headcommand {\beamer@partpages {1}{38}}
-\headcommand {\beamer@subsectionpages {34}{38}}
-\headcommand {\beamer@sectionpages {34}{38}}
-\headcommand {\beamer@documentpages {38}}
-\headcommand {\def \inserttotalframenumber {13}}
+\headcommand {\slideentry {4}{1}{2}{37/37}{Architecture}{0}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {4}{1}{3}{38/42}{Architecture}{0}}
+\headcommand {\beamer@framepages {38}{42}}
+\headcommand {\slideentry {4}{1}{4}{43/44}{Architecture}{0}}
+\headcommand {\beamer@framepages {43}{44}}
+\headcommand {\slideentry {4}{1}{5}{45/47}{Architecture}{0}}
+\headcommand {\beamer@framepages {45}{47}}
+\headcommand {\slideentry {4}{1}{6}{48/52}{Architecture}{0}}
+\headcommand {\beamer@framepages {48}{52}}
+\headcommand {\beamer@partpages {1}{52}}
+\headcommand {\beamer@subsectionpages {34}{52}}
+\headcommand {\beamer@sectionpages {34}{52}}
+\headcommand {\beamer@documentpages {52}}
+\headcommand {\def \inserttotalframenumber {17}}
