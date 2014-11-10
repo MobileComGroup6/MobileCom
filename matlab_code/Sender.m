@@ -60,8 +60,7 @@ classdef Sender < SendingNode
         
         function channelNr = getChannelNr(self)
             % Generate a new Pn sequence
-            numOfChannels = 5;
-            l = log2(numOfChannels);
+            l = log2(self.NumOfChannels);
             pn = self.pnGenerator.generate(l);
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));

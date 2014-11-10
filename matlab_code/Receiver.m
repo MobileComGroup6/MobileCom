@@ -63,8 +63,7 @@ classdef Receiver < Node
         function channelNr = getChannelNr(self)
             % Get the current Pn sequence
             pn = self.pnGenerator.Pn;
-            numOfChannels = 5;
-            l = log2(numOfChannels);
+            l = log2(self.NumOfChannels);
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));
         end
