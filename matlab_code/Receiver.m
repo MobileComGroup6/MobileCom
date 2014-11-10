@@ -20,7 +20,7 @@ classdef Receiver < Node
             self.Mode = mode;
         end        
         
-        function receive(self)
+        function data_despreaded = receive(self)
             % read data on medium
             mData = self.Medium.read();
             if strcmp(self.Mode, 'dsss')
@@ -41,6 +41,7 @@ classdef Receiver < Node
                 data_despreaded = self.BPSKDemodulator.step(mData);
             else
                 error(['invalid mode: ', self.Mode]);
+                data_despreaded = -1;
             end
 
             disp('Received data:');
