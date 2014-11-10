@@ -4,7 +4,6 @@ classdef Receiver < Node
     properties (Access = private)
         pnGenerator
         BPSKDemodulator
-        FSKDemodulator
     end
     
     properties
@@ -17,7 +16,6 @@ classdef Receiver < Node
         function self = Receiver(medium, pnGenerator, mode)
             self.Medium = medium;
             self.BPSKDemodulator = comm.BPSKDemodulator;
-            self.FSKDemodulator = comm.FSKDemodulator;
             self.pnGenerator = pnGenerator;
             self.Mode = mode;
         end        
@@ -37,7 +35,7 @@ classdef Receiver < Node
                 % despread data
                 data = self.FHSSDespread(mData, channelNr);
                 % demodulate data
-                data_despreaded = self.FSKDemodulator.step(data);
+                data_despreaded = self.BPSKDemodulator.step(data);
             elseif strcmp(self.Mode, 'none')
                 % demodulate data
                 data_despreaded = self.BPSKDemodulator.step(mData);
@@ -65,7 +63,7 @@ classdef Receiver < Node
         function channelNr = getChannelNr(self)
             % Get the current Pn sequence
             pn = self.pnGenerator.Pn;
-            numOfChannels = self.FSKDemodulator.ModulationOrder;
+            numOfChannels = 5;
             l = log2(numOfChannels);
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));

@@ -3,7 +3,6 @@ classdef Sender < SendingNode
     properties (Access = private)
        pnGenerator
        BPSKModulator
-       FSKModulator
     end
     
     properties
@@ -16,7 +15,6 @@ classdef Sender < SendingNode
         function self = Sender(medium, pnGenerator, mode)
             self.Medium = medium;
             self.BPSKModulator = comm.BPSKModulator;
-            self.FSKModulator = comm.FSKModulator;
             self.pnGenerator = pnGenerator;
             self.Mode = mode;
         end        
@@ -30,13 +28,13 @@ classdef Sender < SendingNode
                 % modulate data
                 mData = self.BPSKModulator.step(data_spreaded);
             elseif strcmp(self.Mode, 'fhss')
-                % modulate data using FSK modulator
-                FSKmData = self.FSKModulator.step(data);
+                % modulate data
+                mData = self.BPSKModulator.step(data);
                 % calculate channel nr. using Pn sequence
                 channelNr = self.getChannelNr();
                 disp(['sending on channel ', num2str(channelNr)]);
-            	% spread data
-                mData = self.FHSSSpread(FSKmData, channelNr);
+            	% spread data / do hopping
+                mData = self.FHSSSpread(mData, channelNr);
             elseif strcmp(self.Mode, 'none')
                 % modulate data
                 mData = self.BPSKModulator.step(data);
@@ -55,14 +53,14 @@ classdef Sender < SendingNode
             data_spreaded = xor(data, pn);
         end
         
-        function data_spreaded = FHSSSpread(self, FSKmData, channelNr)
+        function data_spreaded = FHSSSpread(self, mData, channelNr)
             % TODO: implement spreading for FHSS
-            data_spreaded = FSKmData;
+            data_spreaded = mData;
         end
         
         function channelNr = getChannelNr(self)
             % Generate a new Pn sequence
-            numOfChannels = self.FSKModulator.ModulationOrder;
+            numOfChannels = 5;
             l = log2(numOfChannels);
             pn = self.pnGenerator.generate(l);
             % Calculating frequency word
