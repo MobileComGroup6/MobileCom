@@ -41,7 +41,6 @@ classdef Receiver < Node
                 data_despreaded = self.BPSKDemodulator.step(mData);
             else
                 error(['invalid mode: ', self.Mode]);
-                data_despreaded = -1;
             end
 
             disp('Received data:');
