@@ -51,7 +51,7 @@ classdef Receiver < Node
     methods (Access=private)
         function data_despreaded = DSSSDespread(self, data)
             % Get the current Pn sequence
-            pn = self.pnGenerator.Pn;
+            pn = self.pnGenerator.getPn(length(data));
             data_despreaded = xor(data, pn);
         end
         
@@ -62,8 +62,8 @@ classdef Receiver < Node
         
         function channelNr = getChannelNr(self)
             % Get the current Pn sequence
-            pn = self.pnGenerator.Pn;
             l = log2(self.NumOfChannels);
+            pn = self.pnGenerator.getPn(l);
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));
         end

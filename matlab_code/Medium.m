@@ -14,8 +14,12 @@ classdef Medium < handle %handle is superclass and provides event machanisms
         end
         
         function data = read(self)
-            % read data and clear medium
+            % read data
             data = ifft(self.Data);
+        end
+        
+        function clear(self)
+            % clear medium
             self.Data = [];
         end
     end

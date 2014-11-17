@@ -2,7 +2,7 @@ classdef PNGenerator < comm.PNSequence
     %PNGenerator extends comm.PNSequence by adding a property to access the
     %generated Pn sequence without having to generate a new one.
     
-    properties (GetAccess = public, SetAccess = private)
+    properties (Access = private)
         Pn
     end
     
@@ -23,6 +23,13 @@ classdef PNGenerator < comm.PNSequence
             end
             pn = pn(1:l);
             self.Pn = pn;
+        end
+        
+        function pn = getPn(self,l)
+            if length(self.Pn) ~= l
+                self.generate(l);
+            end
+            pn = self.Pn;
         end
     end
     
