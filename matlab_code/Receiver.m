@@ -12,7 +12,7 @@ classdef Receiver < Node
         ChippingRate
         SampleRate
         DataRate
-        CarrierFrequency
+        CarrierFrequency = 100;
     end
 
 %Methods
@@ -26,7 +26,6 @@ classdef Receiver < Node
             self.SampleRate = samplesPerSecond;
             self.DataRate = dataRate;
             self.ChippingRate = chippingRate;
-            self.CarrierFrequency = 50;
         end        
         
         function data_despreaded = receive(self)

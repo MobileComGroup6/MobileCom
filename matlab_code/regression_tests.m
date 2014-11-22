@@ -6,6 +6,7 @@
 
 %% one section for each test
 clear all
+close all
 clc
 
 %% Send an receive random data using DSSS without noise
@@ -13,7 +14,7 @@ clc
 %setup
 samplesPerSecond = 1000;
 dataRate = 4;
-chippingRate = 20;
+chippingRate = 50;
 medium = Medium;
 pnGenerator = PNGenerator(100);
 sequence = pnGenerator.step();

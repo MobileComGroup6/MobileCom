@@ -11,7 +11,7 @@ classdef Sender < SendingNode
         ChippingRate
         SampleRate
         DataRate
-        CarrierFrequency
+        CarrierFrequency = 100;
     end
 
 %Methods
@@ -25,7 +25,6 @@ classdef Sender < SendingNode
             self.SampleRate = samplesPerSecond;
             self.DataRate = dataRate;
             self.ChippingRate = chippingRate;
-            self.CarrierFrequency = 50;
         end        
         
         function send(self, data)
@@ -36,9 +35,12 @@ classdef Sender < SendingNode
             	% spread data
                 data_spreaded = self.DSSSSpread(data);
                 % modulate data
-                %mData = self.BPSKModulator.step(data_spreaded);
                 mData = pmmod(double(data_spreaded), self.CarrierFrequency, self.SampleRate, pi/2);
                 
+								% visualize part of modulated signal
+								figure;
+								plot(mData(1:200)); title('Modulated Signal');
+								ylim([-3,3]);
             elseif strcmp(self.Mode, 'fhss')
                 % modulate data
                 mData = self.BPSKModulator.step(data);
@@ -70,6 +72,16 @@ classdef Sender < SendingNode
             end
             pnSampled = pnSampled(1:length(dataSampled));
             data_spreaded = xor(dataSampled, pnSampled);
+						
+						% Visualize Data and PN Sequence
+						figure;
+						subplot(3,1,1); stairs(dataSampled); title('Data')
+						ylim([-1,2]);
+						subplot(3,1,2); stairs(pnSampled); title('PN Sequence');
+						ylim([-1,2]);
+						subplot(3,1,3); stairs(data_spreaded); title('Spread Data');
+						ylim([-1,2]);
+						
 				end
         
         function data_spreaded = FHSSSpread(self, mData, channelNr)
