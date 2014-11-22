@@ -2,22 +2,31 @@ classdef Receiver < Node
 %Properties
     %private class properties.
     properties (Access = private)
-        pnGenerator
+        pnCode
+        numOfSamples
         BPSKDemodulator
     end
     
     properties
         Mode
+        ChippingRate
+        SampleRate
+        DataRate
+        CarrierFrequency
     end
 
 %Methods
     methods
         %class constructor
-        function self = Receiver(medium, pnGenerator, mode)
+        function self = Receiver(medium, pnCode, mode, samplesPerSecond, dataRate, chippingRate)
             self.Medium = medium;
             self.BPSKDemodulator = comm.BPSKDemodulator;
-            self.pnGenerator = pnGenerator;
+            self.pnCode = pnCode;
             self.Mode = mode;
+            self.SampleRate = samplesPerSecond;
+            self.DataRate = dataRate;
+            self.ChippingRate = chippingRate;
+            self.CarrierFrequency = 50;
         end        
         
         function data_despreaded = receive(self)
@@ -25,7 +34,8 @@ classdef Receiver < Node
             mData = self.Medium.read();
             if strcmp(self.Mode, 'dsss')
                 % demodulate data
-                data = self.BPSKDemodulator.step(mData);
+                %data = self.BPSKDemodulator.step(mData);
+                data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
                 % despread data
                 data_despreaded = self.DSSSDespread(data);
             elseif strcmp(self.Mode, 'fhss')
@@ -49,10 +59,28 @@ classdef Receiver < Node
     end
     
     methods (Access=private)
-        function data_despreaded = DSSSDespread(self, data)
+        function data_despread = DSSSDespread(self, data)
             % Get the current Pn sequence
-            pn = self.pnGenerator.getPn(length(data));
-            data_despreaded = xor(data, pn);
+            pn = self.pnCode;
+            sampledData = data;
+            sampledData(sampledData<0.5) = 0;
+            sampledData(sampledData>=0.5) = 1;
+            
+            pnSampled = self.sampleData(pn, self.ChippingRate);
+            factor = ceil(length(sampledData)/length(pnSampled));
+            if factor > 1
+                pnSampled = repmat(pnSampled,factor,1);
+            end
+            pnSampled = pnSampled(1:length(sampledData));
+            
+            data_despread = xor(sampledData, pnSampled);
+            
+            symbolLength = self.SampleRate/self.DataRate;
+            numOfSymbols = length(data_despread)/symbolLength;
+            
+            mat = reshape(data_despread,symbolLength,numOfSymbols,1);
+            
+            data_despread = im2bw(mean(mat,1),0.5)';
         end
         
         function data_despreaded = FHSSDespread(self, mData, channelNr)
@@ -66,6 +94,16 @@ classdef Receiver < Node
             pn = self.pnGenerator.getPn(l);
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));
+        end
+        
+        function sampledData = sampleData(self, data, rate)
+            %sample the sequence
+            sampledData = [];
+            partLength = self.SampleRate/rate;
+            for i = 1:length(data)
+                part = repmat(data(i),partLength,1);
+                sampledData = [sampledData; part];
+            end
         end
     end
     

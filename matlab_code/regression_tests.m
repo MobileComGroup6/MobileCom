@@ -11,10 +11,14 @@ clc
 %% Send an receive random data using DSSS without noise
 
 %setup
+samplesPerSecond = 1000;
+dataRate = 4;
+chippingRate = 20;
 medium = Medium;
 pnGenerator = PNGenerator(100);
-sender = Sender(medium, pnGenerator, 'dsss');
-receiver = Receiver(medium, pnGenerator, 'dsss');
+sequence = pnGenerator.step();
+sender = Sender(medium, sequence, 'dsss', samplesPerSecond, dataRate,chippingRate);
+receiver = Receiver(medium, sequence, 'dsss', samplesPerSecond, dataRate,chippingRate);
 test_data = randi([0,1],10,3);
 
 %test
