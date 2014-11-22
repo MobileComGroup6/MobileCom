@@ -94,17 +94,6 @@ classdef Receiver < Node
             pn = self.pnGenerator.getPn(l);
             % Calculating frequency word
             channelNr = bin2dec(num2str(pn(1:l)'));
-        end
-        
-        function sampledData = sampleData(self, data, rate)
-            %sample the sequence
-            sampledData = [];
-            partLength = self.SampleRate/rate;
-            for i = 1:length(data)
-                part = repmat(data(i),partLength,1);
-                sampledData = [sampledData; part];
-            end
-        end
-    end
-    
+				end
+		end    
 end

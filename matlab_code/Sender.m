@@ -70,17 +70,7 @@ classdef Sender < SendingNode
             end
             pnSampled = pnSampled(1:length(dataSampled));
             data_spreaded = xor(dataSampled, pnSampled);
-        end
-        
-        function sampledData = sampleData(self, data, rate)
-            %sample the sequence
-            sampledData = [];
-            partLength = self.SampleRate/rate;
-            for i = 1:length(data)
-                part = repmat(data(i),partLength,1);
-                sampledData = [sampledData; part];
-            end
-        end
+				end
         
         function data_spreaded = FHSSSpread(self, mData, channelNr)
             % TODO: implement spreading for FHSS
