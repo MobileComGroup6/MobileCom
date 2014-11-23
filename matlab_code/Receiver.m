@@ -5,7 +5,7 @@ classdef Receiver < Node
 		pnCode
 		numOfSamples
 		BPSKDemodulator
-        bandwidth
+		bandwidth
 	end
 	
 	properties
@@ -27,7 +27,7 @@ classdef Receiver < Node
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
-            self.bandwidth = 10;
+			self.bandwidth = 10;
 		end
 		
 		function data_despread = receive(self)
@@ -37,6 +37,9 @@ classdef Receiver < Node
 				% demodulate data
 				%data = self.BPSKDemodulator.step(mData);
 				data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
+				
+				figure; plot(data); title('Demodulated Signal')
+				
 				% despread data
 				data_despread = self.DSSSDespread(data);
 			elseif strcmp(self.Mode, 'fhss')
@@ -46,37 +49,39 @@ classdef Receiver < Node
 				% despread data
 				%data = self.FHSSDespread(mData, channelNr);
 				
-                % demodulate data
+				% demodulate data
 				symbolLength = self.SampleRate/self.DataRate;
-                numOfSymbols = length(mData)/symbolLength;
-                
-                chipLength = self.SampleRate/self.ChippingRate;
-                
-                chipNum = ceil(length(mData)/chipLength);
-                
-                factor = ceil(chipNum/length(channels));
-                
-                if factor > 1
-                    channels = repmat(channels,factor,1);
-                end
-                channels = channels(1:chipNum);
-                
-                demodulated = [];
-                for i = 0:chipNum-1
-                    part = mData(i*chipLength+1:(i+1)*chipLength);
-                    channel = channels(i+1);
-                    partDemodulated = pmdemod(part,self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
-                    demodulated = [demodulated;partDemodulated];
-                end
-                
-                recoveredData = [];
-                for i = 0:numOfSymbols-1
-                    part = demodulated(i*symbolLength+1:(i+1)*symbolLength);
-                    value = mean(part);
-                    recoveredData = [recoveredData;value];
-                end
-                data_despread = recoveredData;
-                data_despread = im2bw(data_despread,0.5);
+				numOfSymbols = length(mData)/symbolLength;
+				
+				chipLength = self.SampleRate/self.ChippingRate;
+				
+				chipNum = ceil(length(mData)/chipLength);
+				
+				factor = ceil(chipNum/length(channels));
+				
+				if factor > 1
+					channels = repmat(channels,factor,1);
+				end
+				channels = channels(1:chipNum);
+				
+				demodulated = [];
+				for i = 0:chipNum-1
+					part = mData(i*chipLength+1:(i+1)*chipLength);
+					channel = channels(i+1);
+					partDemodulated = pmdemod(part,self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
+					demodulated = [demodulated;partDemodulated];
+				end
+				
+				figure; plot(demodulated); title('Demodulated Signal')
+				
+				recoveredData = [];
+				for i = 0:numOfSymbols-1
+					part = demodulated(i*symbolLength+1:(i+1)*symbolLength);
+					value = mean(part);
+					recoveredData = [recoveredData;value];
+				end
+				data_despread = recoveredData;
+				data_despread = im2bw(data_despread,0.5);
 			elseif strcmp(self.Mode, 'none')
 				% demodulate data
 				data_despread = self.BPSKDemodulator.step(mData);
@@ -123,12 +128,12 @@ classdef Receiver < Node
 			% Generate a new Pn sequence
 			l = log2(self.NumOfChannels);
 			% Calculating frequency word
-            channelNr = [];
-            pn = self.pnCode;
-            numOfWords = floor(length(pn)/l);
-            for i = 0:numOfWords-1
-                channelNr = [channelNr;bin2dec(num2str(pn(i*l+1:(i+1)*l)'))];
-            end
+			channelNr = [];
+			pn = self.pnCode;
+			numOfWords = floor(length(pn)/l);
+			for i = 0:numOfWords-1
+				channelNr = [channelNr;bin2dec(num2str(pn(i*l+1:(i+1)*l)'))];
+			end
 		end
 	end
 end

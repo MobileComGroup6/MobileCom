@@ -4,7 +4,7 @@ classdef Sender < SendingNode
 		pnCode
 		BPSKModulator
 		numOfSamples
-        bandwidth
+		bandwidth
 	end
 	
 	properties
@@ -26,7 +26,7 @@ classdef Sender < SendingNode
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
-            self.bandwidth = 10;
+			self.bandwidth = 10;
 		end
 		
 		function send(self, data)
@@ -38,11 +38,6 @@ classdef Sender < SendingNode
 				data_spreaded = self.DSSSSpread(data);
 				% modulate data
 				mData = pmmod(double(data_spreaded), self.CarrierFrequency, self.SampleRate, pi/2);
-				
-				% visualize part of modulated signal
-				figure;
-				plot(mData(1:200)); title('Modulated Signal');
-				ylim([-3,3]);
 			elseif strcmp(self.Mode, 'fhss')
 				% modulate data
 				% calculate channel nr. using Pn sequence
@@ -50,35 +45,44 @@ classdef Sender < SendingNode
 				%disp(['sending on channels ', channelNr']);
 				% does only sample right now
 				mData = self.FHSSSpread(data);
-                
-                symbolLength = self.SampleRate/self.DataRate;
-                numOfSymbols = length(mData)/symbolLength;
-                
-                chipLength = self.SampleRate/self.ChippingRate;
-                
-                chipNum = ceil(length(mData)/chipLength);
-                
-                factor = ceil(chipNum/length(channels));
-                
-                if factor > 1
-                    channels = repmat(channels,factor,1);
-                end
-                channels = channels(1:chipNum);
-             
-                toSend = [];
-                for i = 0:chipNum-1
-                    part = mData(i*chipLength+1:(i+1)*chipLength);
-                    channel = channels(i+1);
-                    partModulated = pmmod(double(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
-                    toSend = [toSend;partModulated];
-                end
-                mData = toSend;
+				
+				symbolLength = self.SampleRate/self.DataRate;
+				numOfSymbols = length(mData)/symbolLength;
+				
+				chipLength = self.SampleRate/self.ChippingRate;
+				
+				chipNum = ceil(length(mData)/chipLength);
+				
+				factor = ceil(chipNum/length(channels));
+				
+				if factor > 1
+					channels = repmat(channels,factor,1);
+				end
+				channels = channels(1:chipNum);
+				
+				toSend = [];
+				for i = 0:chipNum-1
+					part = mData(i*chipLength+1:(i+1)*chipLength);
+					channel = channels(i+1);
+					partModulated = pmmod(double(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
+					toSend = [toSend;partModulated];
+				end
+				mData = toSend;
 			elseif strcmp(self.Mode, 'none')
 				% modulate data
 				mData = self.BPSKModulator.step(data);
 			else
 				error(['invalid mode: ', self.Mode]);
 			end
+			
+			% Add Noise
+			mData = awgn(mData, 10, 'measured');
+			
+			% Visualize data sent to medium
+			figure;
+			plot(mData(1:200)); title('Modulated Signal');
+			ylim([-3,3]);
+			
 			% write data to medium
 			self.Medium.write(mData);
 		end
@@ -109,20 +113,23 @@ classdef Sender < SendingNode
 		end
 		
 		function data_spreaded = FHSSSpread(self, mData)
-			% TODO: implement spreading for FHSS                        
+			% TODO: implement spreading for FHSS
 			data_spreaded = self.sampleData(mData, self.DataRate);
+			
+			figure; stairs(data_spreaded); title('Data');
+			ylim([-1,2]);
 		end
 		
 		function channelNr = getChannelNr(self)
 			% Generate a new Pn sequence
 			l = log2(self.NumOfChannels);
 			% Calculating frequency word
-            channelNr = [];
-            pn = self.pnCode;
-            numOfWords = floor(length(pn)/l);
-            for i = 0:numOfWords-1
-                channelNr = [channelNr;bin2dec(num2str(pn(i*l+1:(i+1)*l)'))];
-            end
+			channelNr = [];
+			pn = self.pnCode;
+			numOfWords = floor(length(pn)/l);
+			for i = 0:numOfWords-1
+				channelNr = [channelNr;bin2dec(num2str(pn(i*l+1:(i+1)*l)'))];
+			end
 		end
 	end
 	
