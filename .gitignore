@@ -10,3 +10,4 @@
 *.out
 *.snm
 *.toc
+/tex_code/report.pdf
