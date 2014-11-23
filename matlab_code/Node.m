@@ -11,6 +11,7 @@ classdef Node < handle %handle is superclass and provides event machanisms
 			partLength = self.SampleRate / rate;
 			sampledData = repmat(data', [partLength, 1, 1]);
 			sampledData = sampledData(:);
-		end
+        end
+        
 	end
 end

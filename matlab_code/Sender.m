@@ -4,6 +4,7 @@ classdef Sender < SendingNode
 		pnCode
 		BPSKModulator
 		numOfSamples
+        bandwidth
 	end
 	
 	properties
@@ -25,6 +26,7 @@ classdef Sender < SendingNode
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
+            self.bandwidth = 10;
 		end
 		
 		function send(self, data)
@@ -43,12 +45,34 @@ classdef Sender < SendingNode
 				ylim([-3,3]);
 			elseif strcmp(self.Mode, 'fhss')
 				% modulate data
-				mData = self.BPSKModulator.step(data);
 				% calculate channel nr. using Pn sequence
-				channelNr = self.getChannelNr();
-				disp(['sending on channel ', num2str(channelNr)]);
-				% spread data / do hopping
-				mData = self.FHSSSpread(mData, channelNr);
+				channels = self.getChannelNr();
+				%disp(['sending on channels ', channelNr']);
+				% does only sample right now
+				mData = self.FHSSSpread(data);
+                
+                symbolLength = self.SampleRate/self.DataRate;
+                numOfSymbols = length(mData)/symbolLength;
+                
+                chipLength = self.SampleRate/self.ChippingRate;
+                
+                chipNum = ceil(length(mData)/chipLength);
+                
+                factor = ceil(chipNum/length(channels));
+                
+                if factor > 1
+                    channels = repmat(channels,factor,1);
+                end
+                channels = channels(1:chipNum);
+             
+                toSend = [];
+                for i = 0:chipNum-1
+                    part = mData(i*chipLength+1:(i+1)*chipLength);
+                    channel = channels(i+1);
+                    partModulated = pmmod(double(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
+                    toSend = [toSend;partModulated];
+                end
+                mData = toSend;
 			elseif strcmp(self.Mode, 'none')
 				% modulate data
 				mData = self.BPSKModulator.step(data);
@@ -84,17 +108,21 @@ classdef Sender < SendingNode
 			
 		end
 		
-		function data_spreaded = FHSSSpread(self, mData, channelNr)
-			% TODO: implement spreading for FHSS
-			data_spreaded = mData;
+		function data_spreaded = FHSSSpread(self, mData)
+			% TODO: implement spreading for FHSS                        
+			data_spreaded = self.sampleData(mData, self.DataRate);
 		end
 		
 		function channelNr = getChannelNr(self)
 			% Generate a new Pn sequence
 			l = log2(self.NumOfChannels);
-			pn = self.pnGenerator.generate(l);
 			% Calculating frequency word
-			channelNr = bin2dec(num2str(pn(1:l)'));
+            channelNr = [];
+            pn = self.pnCode;
+            numOfWords = floor(length(pn)/l);
+            for i = 0:numOfWords-1
+                channelNr = [channelNr;bin2dec(num2str(pn(i*l+1:(i+1)*l)'))];
+            end
 		end
 	end
 	
