@@ -2,7 +2,6 @@ classdef Sender < SendingNode
 	%Properties
 	properties (Access = private)
 		pnCode
-		BPSKModulator
 		numOfSamples
 		bandwidth
 	end
@@ -20,7 +19,6 @@ classdef Sender < SendingNode
 		%class constructor
 		function self = Sender(medium, pnCode, mode, samplesPerSecond, dataRate, chippingRate)
 			self.Medium = medium;
-			self.BPSKModulator = comm.BPSKModulator;
 			self.pnCode = pnCode;
 			self.Mode = mode;
 			self.SampleRate = samplesPerSecond;
@@ -42,7 +40,6 @@ classdef Sender < SendingNode
 				% modulate data
 				% calculate channel nr. using Pn sequence
 				channels = self.getChannelNr();
-				%disp(['sending on channels ', channelNr']);
 				% does only sample right now
 				mData = self.FHSSSpread(data);
 				
@@ -70,7 +67,8 @@ classdef Sender < SendingNode
 				mData = toSend;
 			elseif strcmp(self.Mode, 'none')
 				% modulate data
-				mData = self.BPSKModulator.step(data);
+                dataSampled = self.sampleData(data, self.DataRate);
+				mData = pmmod(double(dataSampled), self.CarrierFrequency, self.SampleRate, pi/2);
 			else
 				error(['invalid mode: ', self.Mode]);
 			end

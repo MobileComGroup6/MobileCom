@@ -2,21 +2,26 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 	%Properties
 	%private class properties.
 	properties (Access = private)
-		Data
+        Data
 		Length
 		NFFT = 10000; % inserts (NFFT - length(Data)) padding to FFT
-	end
+    end
+    
 	
 	%Methods
 	methods
+        %class constructor
+		function self = Medium()
+			self.Data = zeros(self.NFFT,1);
+		end
+        
 		function write(self, data)
 			% Store original data length, so we can restore signal later,
 			% necessary because of addition of padding
 			self.Length = length(data);
 			
-			% TODO: add data instead of replacing it
-			% transform data and write it to the medium
-			self.Data = fft(data, self.NFFT);
+			% Add data on the medium
+			self.Data = self.Data + fft(data, self.NFFT);
 			
 			% Visualize data on Medium (passband, not baseband)
 			figure;
@@ -37,7 +42,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 		
 		function clear(self)
 			% clear medium
-			self.Data = [];
+			self.Data = zeros(self.NFFT,1);
 		end
 	end
 	

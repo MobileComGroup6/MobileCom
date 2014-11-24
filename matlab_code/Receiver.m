@@ -4,7 +4,6 @@ classdef Receiver < Node
 	properties (Access = private)
 		pnCode
 		numOfSamples
-		BPSKDemodulator
 		bandwidth
 	end
 	
@@ -21,7 +20,6 @@ classdef Receiver < Node
 		%class constructor
 		function self = Receiver(medium, pnCode, mode, samplesPerSecond, dataRate, chippingRate)
 			self.Medium = medium;
-			self.BPSKDemodulator = comm.BPSKDemodulator;
 			self.pnCode = pnCode;
 			self.Mode = mode;
 			self.SampleRate = samplesPerSecond;
@@ -35,7 +33,6 @@ classdef Receiver < Node
 			mData = self.Medium.read();
 			if strcmp(self.Mode, 'dsss')
 				% demodulate data
-				%data = self.BPSKDemodulator.step(mData);
 				data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
 				
 				figure; plot(data); title('Demodulated Signal')
@@ -45,9 +42,6 @@ classdef Receiver < Node
 			elseif strcmp(self.Mode, 'fhss')
 				% calculate channel nr. using Pn sequence
 				channels = self.getChannelNr();
-				%disp(['reading on channel ', num2str(channelNr)]);
-				% despread data
-				%data = self.FHSSDespread(mData, channelNr);
 				
 				% demodulate data
 				symbolLength = self.SampleRate/self.DataRate;
@@ -84,7 +78,13 @@ classdef Receiver < Node
 				data_despread = im2bw(data_despread,0.5);
 			elseif strcmp(self.Mode, 'none')
 				% demodulate data
-				data_despread = self.BPSKDemodulator.step(mData);
+                symbolLength = self.SampleRate/self.DataRate;
+				numOfSymbols = length(mData)/symbolLength;
+				data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
+                sampledData = data(ceil(symbolLength/2):symbolLength:end);
+                sampledData(sampledData<0.5) = 0;
+                sampledData(sampledData>=0.5) = 1;
+                data_despread = sampledData;
 			else
 				error(['invalid mode: ', self.Mode]);
 			end

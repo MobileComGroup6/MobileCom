@@ -23,10 +23,11 @@ receiver = Receiver(medium, sequence, 'dsss', samplesPerSecond, dataRate,chippin
 test_data = randi([0,1],10,3);
 
 %test
-for k = 1:size(test_data, 2)    
+for k = 1:size(test_data, 2)
     sender.send(test_data(:,k));
     data_rec = receiver.receive();
     assert(isequal(test_data(:,k), data_rec));
+    medium.clear();
 end
 
 %% Send an receive random data using FHSS
@@ -47,6 +48,7 @@ for k = 1:size(test_data, 2)
     sender.send(test_data(:,k));
     data_rec = receiver.receive();
     assert(isequal(test_data(:,k), data_rec));
+    medium.clear();
 end
 
 
@@ -70,6 +72,7 @@ for k = 1:size(test_data, 2)
     sender.send(test_data(:,k));
     data_rec = receiver.receive();
     assert(isequal(test_data(:,k), data_rec));
+    medium.clear();
 end
 
 %% Send an receive random data using FHSS with short PN sequence
@@ -90,6 +93,7 @@ for k = 1:size(test_data, 2)
     sender.send(test_data(:,k));
     data_rec = receiver.receive();
     assert(isequal(test_data(:,k), data_rec));
+    medium.clear();
 end
 
 %% Make sure in DSSS another receiver (with another PN sequence) can not read data
@@ -114,6 +118,7 @@ for k = 1:size(test_data, 2)
     assert(isequal(test_data(:,k), data_rec));
     data_rec2 = receiver2.receive();
     assert(~isequal(test_data(:,k), data_rec2));
+    medium.clear();
 end
 
 %% Make sure in FHSS another receiver (with another PN sequence) can not read data
@@ -137,5 +142,6 @@ for k = 1:size(test_data, 2)
     data_rec = receiver.receive();
     assert(isequal(test_data(:,k), data_rec));
     data_rec2 = receiver2.receive();
-    assert(~isequal(test_data(:,k), data_rec2)); % currently failing because frequency hopping not implemented yet
+    assert(~isequal(test_data(:,k), data_rec2));
+    medium.clear();
 end

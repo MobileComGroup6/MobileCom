@@ -1,7 +1,7 @@
 classdef Jammer < SendingNode
 	%Properties
 	properties (Access = private)
-		Modulator
+		
 	end
 	
 	%Methods
@@ -9,12 +9,11 @@ classdef Jammer < SendingNode
 		%class constructor
 		function self = Jammer(medium)
 			self.Medium = medium;
-			self.Modulator = comm.BPSKModulator;
 		end
 		
 		function send(self, data)
-			% modulate data
-			mData = self.Modulator.step(data);
+			% TODO: modulate data
+			
 			% write data to medium
 			self.Medium.write(mData);
 		end
