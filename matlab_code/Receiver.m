@@ -7,14 +7,6 @@ classdef Receiver < Node
 		bandwidth
 	end
 	
-	properties
-		Mode
-		ChippingRate
-		SampleRate
-		DataRate
-		CarrierFrequency = 100;
-	end
-	
 	%Methods
 	methods
 		%class constructor

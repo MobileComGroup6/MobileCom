@@ -3,7 +3,12 @@ classdef Node < handle %handle is superclass and provides event machanisms
 	properties
 		Medium
 		NumOfChannels = 8
-	end
+		ChippingRate
+		SampleRate
+		DataRate
+		CarrierFrequency = 100;
+		Mode
+	end	
 	
 	methods (Access=protected)
 		function sampledData = sampleData(self, data, rate)
