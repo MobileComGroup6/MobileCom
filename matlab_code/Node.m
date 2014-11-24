@@ -8,7 +8,7 @@ classdef Node < handle %handle is superclass and provides event machanisms
 		DataRate
 		CarrierFrequency = 100;
 		Mode
-	end	
+	end
 	
 	methods (Access=protected)
 		function sampledData = sampleData(self, data, rate)
@@ -16,7 +16,6 @@ classdef Node < handle %handle is superclass and provides event machanisms
 			partLength = self.SampleRate / rate;
 			sampledData = repmat(data', [partLength, 1, 1]);
 			sampledData = sampledData(:);
-        end
-        
+		end
 	end
 end

@@ -9,10 +9,12 @@ clear all
 close all
 clc
 
+samplesPerSecond = 10000;
+
 %% Send an receive random data using DSSS without noise
 
 %setup
-samplesPerSecond = 1000;
+
 dataRate = 4;
 chippingRate = 50;
 medium = Medium;
@@ -33,7 +35,6 @@ end
 %% Send an receive random data using FHSS
 
 %setup
-samplesPerSecond = 1000;
 dataRate = 4;
 chippingRate = 50;
 medium = Medium;
@@ -55,8 +56,6 @@ end
 %% Send an receive random data using DSSS without noise with short PN sequence
 
 %setup
-
-samplesPerSecond = 1000;
 dataRate = 4;
 chippingRate = 50;
 medium = Medium;
@@ -78,7 +77,6 @@ end
 %% Send an receive random data using FHSS with short PN sequence
 
 %setup
-samplesPerSecond = 1000;
 dataRate = 4;
 chippingRate = 50;
 medium = Medium;
@@ -99,7 +97,6 @@ end
 %% Make sure in DSSS another receiver (with another PN sequence) can not read data
 
 %setup
-samplesPerSecond = 1000;
 dataRate = 4;
 chippingRate = 50;
 medium = Medium;
@@ -124,7 +121,6 @@ end
 %% Make sure in FHSS another receiver (with another PN sequence) can not read data
 
 %setup
-samplesPerSecond = 1000;
 dataRate = 4;
 chippingRate = 50;
 medium = Medium;

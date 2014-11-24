@@ -37,3 +37,15 @@ figure;plot(faxis, fft_filtered(1:NFFT/2+1)); title('FFT(filtered signal)');
 modulated = pmmod(filtered, 500, Fs, pi/2);
 fft_modulated = abs(fft(modulated, NFFT));
 figure;plot(faxis, fft_modulated(1:NFFT/2+1)); title('FFT(modulated signal)');
+%%
+clear all;
+close all;
+clc;
+%%
+
+Fs = 10000;
+
+medium = Medium;
+jammer = Jammer(medium, Fs, 'narrowband');
+jammer.jam(200, 2); % Jam 200Hz band with 2db
+
