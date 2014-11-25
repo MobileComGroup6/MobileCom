@@ -46,6 +46,25 @@ clc;
 Fs = 10000;
 
 medium = Medium;
+
+dataRate = 4;
+chippingRate = 50;
+
+pnGenerator = PNGenerator(3*12);
+sequence = pnGenerator.step();
+sender = Sender(medium, sequence, 'fhss', Fs, dataRate,chippingRate);
+
 jammer = Jammer(medium, Fs, 'narrowband');
-jammer.jam(200, 2); % Jam 200Hz band with 2db
+
+test_data = randi([0,1],20,1);
+
+sender.send(test_data);
+jammer.jam(100, 10);
+
+receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
+
+received = receiver.receive();
+
+assert(isequal(test_data, received));
+
 

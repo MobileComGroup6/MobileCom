@@ -35,7 +35,7 @@ classdef Jammer < SendingNode
 			modulated = pmmod(noise, Fc, Fs, pi/2);
 			
 			% write data to medium
-			self.Medium.write(modulated);
+			self.Medium.write(modulated');
 		end
 	end
 	
@@ -49,6 +49,7 @@ classdef Jammer < SendingNode
 			w = 2*ceil(1.5*sigma)+1; % Filter Window
 			filter = 1/(sqrt(2*pi)*sigma)*exp(-(-w:w).^2/(2*sigma^2));
 			
+			% Filter noise to achieve desired frequency response
 			noise = conv(signal, filter, 'same');
 		end
 		
@@ -57,7 +58,7 @@ classdef Jammer < SendingNode
 		end
 		
 		function nbNoise = narrowbandNoise(self, length, power)
-			nbNoise = generateNoise(self,length, power, 20.0);
+			nbNoise = generateNoise(self,length, power, 100.0);
 		end
 	end
 	

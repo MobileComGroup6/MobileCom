@@ -7,6 +7,7 @@ classdef Node < handle %handle is superclass and provides event machanisms
 		SampleRate
 		DataRate
 		CarrierFrequency = 100;
+		bandwidth = 30;
 		Mode
 	end
 	

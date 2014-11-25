@@ -4,7 +4,6 @@ classdef Receiver < Node
 	properties (Access = private)
 		pnCode
 		numOfSamples
-		bandwidth
 	end
 	
 	%Methods
@@ -17,7 +16,6 @@ classdef Receiver < Node
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
-			self.bandwidth = 10;
 		end
 		
 		function data_despread = receive(self)
@@ -40,7 +38,6 @@ classdef Receiver < Node
 				numOfSymbols = length(mData)/symbolLength;
 				
 				chipLength = self.SampleRate/self.ChippingRate;
-				
 				chipNum = ceil(length(mData)/chipLength);
 				
 				factor = ceil(chipNum/length(channels));
@@ -70,13 +67,12 @@ classdef Receiver < Node
 				data_despread = im2bw(data_despread,0.5);
 			elseif strcmp(self.Mode, 'none')
 				% demodulate data
-                symbolLength = self.SampleRate/self.DataRate;
-				numOfSymbols = length(mData)/symbolLength;
+				symbolLength = self.SampleRate/self.DataRate;
 				data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
-                sampledData = data(ceil(symbolLength/2):symbolLength:end);
-                sampledData(sampledData<0.5) = 0;
-                sampledData(sampledData>=0.5) = 1;
-                data_despread = sampledData;
+				sampledData = data(ceil(symbolLength/2):symbolLength:end);
+				sampledData(sampledData<0.5) = 0;
+				sampledData(sampledData>=0.5) = 1;
+				data_despread = sampledData;
 			else
 				error(['invalid mode: ', self.Mode]);
 			end

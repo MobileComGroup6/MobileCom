@@ -10,7 +10,6 @@ close all
 clc
 
 samplesPerSecond = 10000;
-
 %% Send an receive random data using DSSS without noise
 
 %setup

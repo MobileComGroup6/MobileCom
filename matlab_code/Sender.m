@@ -3,7 +3,6 @@ classdef Sender < SendingNode
 	properties (Access = private)
 		pnCode
 		numOfSamples
-		bandwidth
 	end
 	
 	%Methods
@@ -16,7 +15,6 @@ classdef Sender < SendingNode
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
-			self.bandwidth = 10;
 		end
 		
 		function send(self, data)
@@ -35,11 +33,7 @@ classdef Sender < SendingNode
 				% does only sample right now
 				mData = self.FHSSSpread(data);
 				
-				symbolLength = self.SampleRate/self.DataRate;
-				numOfSymbols = length(mData)/symbolLength;
-				
 				chipLength = self.SampleRate/self.ChippingRate;
-				
 				chipNum = ceil(length(mData)/chipLength);
 				
 				factor = ceil(chipNum/length(channels));
@@ -66,7 +60,7 @@ classdef Sender < SendingNode
 			end
 			
 			% Add Noise
-			mData = awgn(mData, 10, 'measured');
+			%mData = awgn(mData, 10, 'measured');
 			
 			% Visualize data sent to medium
 			figure;
