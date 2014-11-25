@@ -140,3 +140,11 @@ for k = 1:size(test_data, 2)
     assert(~isequal(test_data(:,k), data_rec2));
     medium.clear();
 end
+
+%% Test random number seed
+
+seed = rng(0, 'twister');
+rng(seed)
+randi(10, 3)
+rng(seed)
+randi(10, 3)
