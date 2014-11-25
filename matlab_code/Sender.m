@@ -60,7 +60,7 @@ classdef Sender < SendingNode
 			end
 			
 			% Add Noise
-			%mData = awgn(mData, 10, 'measured');
+			mData = awgn(mData, 10, 'measured');
 			
 			% Visualize data sent to medium
 			figure;

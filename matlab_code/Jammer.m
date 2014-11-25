@@ -58,7 +58,7 @@ classdef Jammer < SendingNode
 		end
 		
 		function nbNoise = narrowbandNoise(self, length, power)
-			nbNoise = generateNoise(self,length, power, 100.0);
+			nbNoise = generateNoise(self,length, power, 20.0);
 		end
 	end
 	
