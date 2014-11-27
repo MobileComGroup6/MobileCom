@@ -79,10 +79,12 @@ classdef Receiver < Node
 				data_despread = sampledData;
 			else
 				error(['invalid mode: ', self.Mode]);
-			end
+            end
 			
-			disp('Received data:');
-			disp(data_despread);
+            if ProjectSettings.verbose
+                disp('Received data:');
+                disp(data_despread);
+            end
 		end
 	end
 	

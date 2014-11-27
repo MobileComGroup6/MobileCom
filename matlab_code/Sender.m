@@ -18,8 +18,10 @@ classdef Sender < SendingNode
 		end
 		
 		function send(self, data)
-			disp('Sending data:');
-			disp(data);
+            if ProjectSettings.verbose
+                disp('Sending data:');
+                disp(data);
+            end
 			self.numOfSamples = length(data)/self.DataRate * self.SampleRate;
 			if strcmp(self.Mode, 'dsss')
 				% spread data
