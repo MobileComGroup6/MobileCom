@@ -11,7 +11,7 @@ clc
 % setup
 
 loadRandom = false;
-saveRandom= true;
+saveRandom = true;
 
 %define some paramters for all tests
 dataRate= 10;

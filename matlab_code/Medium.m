@@ -32,15 +32,17 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			% Add data on the medium
 			self.Data = self.Data + fft(data, self.NFFT);
 			
-			% Visualize data on Medium (passband, not baseband)
-			figure;
-			% 1000 is sampling frequency, should be some kind of variable
-			% here
-			faxis = 10000/2*linspace(0,1,self.NFFT/2+1);
-			fft_vis = abs(self.Data);
-			fft_vis = fft_vis(1:self.NFFT/2+1);
-			plot(faxis(1:4000), fft_vis(1:4000)); title('Data on Medium');
-			xlabel('Frequency (Hz)');
+            if ProjectSettings.verbose
+                % Visualize data on Medium (passband, not baseband)
+                figure;
+                % 1000 is sampling frequency, should be some kind of variable
+                % here
+                faxis = 10000/2*linspace(0,1,self.NFFT/2+1);
+                fft_vis = abs(self.Data);
+                fft_vis = fft_vis(1:self.NFFT/2+1);
+                plot(faxis(1:4000), fft_vis(1:4000)); title('Data on Medium');
+                xlabel('Frequency (Hz)');
+            end
 			
 		end
 		

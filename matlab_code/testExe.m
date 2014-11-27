@@ -12,6 +12,8 @@ else
 end    
 
 %% test
+% deactivate verbose output to prevent figure spam
+ProjectSettings.verbose(false);
 %counter to access the right column of the randomNumbers
 msgsSent = 0;
 %counter that is increased each time a test configuration with all
@@ -86,7 +88,9 @@ for chippingRate = chippingRates
 end
 %% output
 % testResults
-figure(1000);
+% reactivate verbose output
+ProjectSettings.verbose(true);
+figure;
 count = 1;
 for i = 1:length(chippingRates)
 	for j = 1:length(chipLengths)

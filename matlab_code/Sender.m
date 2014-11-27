@@ -62,10 +62,12 @@ classdef Sender < SendingNode
 			% Add Noise
 			mData = awgn(mData, 10, 'measured');
 			
-			% Visualize data sent to medium
-			figure;
-			plot(mData(1:200)); title('Modulated Signal');
-			ylim([-3,3]);
+            if ProjectSettings.verbose
+                % Visualize data sent to medium
+                figure;
+                plot(mData(1:200)); title('Modulated Signal');
+                ylim([-3,3]);
+            end
 			
 			% write data to medium
 			self.Medium.write(mData);
@@ -85,14 +87,16 @@ classdef Sender < SendingNode
 			pnSampled = pnSampled(1:length(dataSampled));
 			data_spreaded = xor(dataSampled, pnSampled);
 			
-			% Visualize Data and PN Sequence
-			figure;
-			subplot(3,1,1); stairs(dataSampled); title('Data')
-			ylim([-1,2]);
-			subplot(3,1,2); stairs(pnSampled); title('PN Sequence');
-			ylim([-1,2]);
-			subplot(3,1,3); stairs(data_spreaded); title('Spread Data');
-			ylim([-1,2]);
+            if ProjectSettings.verbose
+                % Visualize Data and PN Sequence
+                figure;
+                subplot(3,1,1); stairs(dataSampled); title('Data')
+                ylim([-1,2]);
+                subplot(3,1,2); stairs(pnSampled); title('PN Sequence');
+                ylim([-1,2]);
+                subplot(3,1,3); stairs(data_spreaded); title('Spread Data');
+                ylim([-1,2]);
+            end
 			
 		end
 		
@@ -100,8 +104,10 @@ classdef Sender < SendingNode
 			% TODO: implement spreading for FHSS
 			data_spreaded = self.sampleData(mData, self.DataRate);
 			
-			figure; stairs(data_spreaded); title('Data');
-			ylim([-1,2]);
+            if ProjectSettings.verbose
+                figure; stairs(data_spreaded); title('Data');
+                ylim([-1,2]);
+            end
 		end
 		
 		function channelNr = getChannelNr(self)

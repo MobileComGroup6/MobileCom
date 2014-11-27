@@ -25,7 +25,9 @@ classdef Receiver < Node
 				% demodulate data
 				data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
 				
-				figure; plot(data); title('Demodulated Signal')
+                if ProjectSettings.verbose
+                    figure; plot(data); title('Demodulated Signal');
+                end
 				
 				% despread data
 				data_despread = self.DSSSDespread(data);
@@ -53,9 +55,11 @@ classdef Receiver < Node
 					channel = channels(i+1);
 					partDemodulated = pmdemod(part,self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
 					demodulated = [demodulated;partDemodulated];
-				end
+                end
 				
-				figure; plot(demodulated); title('Demodulated Signal')
+                if ProjectSettings.verbose
+                    figure; plot(demodulated); title('Demodulated Signal');
+                end
 				
 				recoveredData = [];
 				for i = 0:numOfSymbols-1
