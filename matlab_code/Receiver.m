@@ -23,11 +23,11 @@ classdef Receiver < Node
 			mData = self.Medium.read();
 			if strcmp(self.Mode, 'dsss')
 				% demodulate data
-				data = pmdemod(mData,self.CarrierFrequency, self.SampleRate, pi/2);
+				data = pmdemod(real(mData),self.CarrierFrequency, self.SampleRate, pi/2);
 				
-                if ProjectSettings.verbose
-                    figure; plot(data); title('Demodulated Signal');
-                end
+				if ProjectSettings.verbose
+					figure; plot(data); title('Demodulated Signal');
+				end
 				
 				% despread data
 				data_despread = self.DSSSDespread(data);
@@ -55,11 +55,11 @@ classdef Receiver < Node
 					channel = channels(i+1);
 					partDemodulated = pmdemod(part,self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
 					demodulated = [demodulated;partDemodulated];
-                end
+				end
 				
-                if ProjectSettings.verbose
-                    figure; plot(demodulated); title('Demodulated Signal');
-                end
+				if ProjectSettings.verbose
+					figure; plot(demodulated); title('Demodulated Signal');
+				end
 				
 				recoveredData = [];
 				for i = 0:numOfSymbols-1
@@ -79,12 +79,12 @@ classdef Receiver < Node
 				data_despread = sampledData;
 			else
 				error(['invalid mode: ', self.Mode]);
-            end
+			end
 			
-            if ProjectSettings.verbose
-                disp('Received data:');
-                disp(data_despread);
-            end
+			if ProjectSettings.verbose
+				disp('Received data:');
+				disp(data_despread);
+			end
 		end
 	end
 	

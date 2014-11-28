@@ -41,27 +41,26 @@ figure;plot(faxis, fft_modulated(1:NFFT/2+1)); title('FFT(modulated signal)');
 clear all;
 close all;
 clc;
-%%
 
 Fs = 10000;
 
 medium = Medium;
 
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 20;
 
 pnGenerator = PNGenerator(3*12);
 sequence = pnGenerator.step();
-sender = Sender(medium, sequence, 'fhss', Fs, dataRate,chippingRate);
+sender = Sender(medium, sequence, 'dsss', Fs, dataRate,chippingRate);
 
-jammer = Jammer(medium, Fs, 'narrowband');
+jammer = Jammer(medium, Fs);
 
 test_data = randi([0,1],20,1);
 
 sender.send(test_data);
-jammer.jam(100, 10);
+jammer.jam(150, 20, 20); %frequency, bandwidth, snr in db
 
-receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
+receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
 
 received = receiver.receive();
 

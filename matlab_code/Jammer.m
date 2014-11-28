@@ -7,59 +7,42 @@ classdef Jammer < SendingNode
 	%Methods
 	methods
 		%class constructor
-		function self = Jammer(medium, samplingRate, mode)
+		function self = Jammer(medium, samplingRate)
 			self.Medium = medium;
 			self.SampleRate = samplingRate;
-			self.JammingMode = mode;
 		end
 		
 		function send(self, data)
 		end
 		
-		function jam(self, frequency, power)
-			length = self.Medium.getDataLength();
-			if (isempty(length))
-				length = 1000;
-			end
+		function jam(self, frequency, bandwidth, snr)
 			
-			if (strcmp(self.JammingMode, 'narrowband'))
-				noise = narrowbandNoise(self,length, power);
-			elseif (strcmp(self.JammingMode, 'wideband'))
-				noise = widebandNoise(self,length, power);
-			end
+			lowerF = frequency-bandwidth/2;
+			higherF = frequency+bandwidth/2;
 			
-			Fs = self.SampleRate;
-			Fc = frequency;
+			signalPower = self.Medium.getPower(lowerF, higherF);
+			noisePower = signalPower / (10^(snr/10));
 			
-			% Modulate noise to jamming frequency
-			modulated = pmmod(noise, Fc, Fs, pi/2);
+			height = noisePower / bandwidth;
 			
-			% write data to medium
-			self.Medium.write(modulated');
+			NFFT = self.Medium.getNFFT();			
+			faxis = (0:NFFT-1)*(self.SampleRate/NFFT);
+			
+			lower = find(faxis >= lowerF);
+			lower = lower(1);
+			
+			higher = find(faxis <= higherF);
+			higher = higher(end);
+			
+			noiseFFT = zeros(1, NFFT);
+			noiseFFT(lower:higher) = height;
+			
+			self.Medium.writeF(noiseFFT');
 		end
 	end
 	
 	methods (Access=private)
-		
-		function noise = generateNoise(self, length, power, sigma)			
-			% Generate Gaussian Noise
-			signal = wgn(1, length, power);
-			
-			% Generate 1D Gaussian Filter with desired sigma
-			w = 2*ceil(1.5*sigma)+1; % Filter Window
-			filter = 1/(sqrt(2*pi)*sigma)*exp(-(-w:w).^2/(2*sigma^2));
-			
-			% Filter noise to achieve desired frequency response
-			noise = conv(signal, filter, 'same');
-		end
-		
-		function wbNoise = widebandNoise(self, length, power)
-			wbNoise = generateNoise(self,length, power, 1.0);
-		end
-		
-		function nbNoise = narrowbandNoise(self, length, power)
-			nbNoise = generateNoise(self,length, power, 20.0);
-		end
+	
 	end
 	
 end

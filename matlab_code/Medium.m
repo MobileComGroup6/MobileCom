@@ -5,7 +5,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 		Data
 		Length
 		NFFT = 100000; % inserts (NFFT - length(Data)) padding to FFT
-	end	
+	end
 	
 	%Methods
 	methods
@@ -14,36 +14,53 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			self.Data = zeros(self.NFFT,1);
 		end
 		
-		function write(self, data)
-			% Handle case if existing and new data have different lenghts
-			%{
-			if (length(data) > self.Length)
-				self.Data = padarray(self.Data, [length(data)-self.Length, 0], 'symmetric');
-			else
-				data = padarray(data, [self.Length-length(data), 0], 'symmetric');
-			end
-			%}
+		function nfft = getNFFT(self)
+			nfft = self.NFFT;
+		end
+		
+		function power = getPower(self, fromF, toF)
+			faxis = (0:self.NFFT-1)*(10000/self.NFFT);
 			
+			lower = find(faxis >= fromF);
+			lower = lower(1);
+			
+			higher = find(faxis <= toF);
+			higher = higher(end);
+			
+			power = sum(self.Data(lower:higher) .* conj(self.Data(lower:higher)));
+		end
+		
+		function writeF(self, fdata)
+			self.Data = self.Data + fdata;
+			self.visualizeSpectrum();
+		end
+		
+		function write(self, data)
 			% Store original data length, so we can restore signal later,
 			% necessary because of addition of padding
 			self.Length = length(data);
-			%self.NFFT = 2^nextpow2(self.Length);
+			
+			disp('Power in time Domain:')
+			disp(sum(data.^2));
 			
 			% Add data on the medium
 			self.Data = self.Data + fft(data, self.NFFT);
-			
-            if ProjectSettings.verbose
-                % Visualize data on Medium (passband, not baseband)
-                figure;
-                % 1000 is sampling frequency, should be some kind of variable
-                % here
-                faxis = 10000/2*linspace(0,1,self.NFFT/2+1);
-                fft_vis = abs(self.Data);
-                fft_vis = fft_vis(1:self.NFFT/2+1);
-                plot(faxis(1:4000), fft_vis(1:4000)); title('Data on Medium');
-                xlabel('Frequency (Hz)');
-            end
-			
+						
+			self.visualizeSpectrum();
+		end
+		
+		function visualizeSpectrum(self)
+			if ProjectSettings.verbose
+				% Visualize data on Medium (passband, not baseband)
+				figure;
+				% 1000 is sampling frequency, should be some kind of variable
+				% here
+				faxis = 10000/2*linspace(0,1,self.NFFT/2+1);
+				fft_vis = abs(self.Data)/self.NFFT;
+				fft_vis = fft_vis(1:self.NFFT/2+1);
+				plot(faxis(1:4000), fft_vis(1:4000)); title('Data on Medium');
+				xlabel('Frequency (Hz)');
+			end
 		end
 		
 		function dLength = getDataLength(self)
