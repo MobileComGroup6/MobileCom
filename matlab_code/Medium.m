@@ -27,7 +27,8 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			higher = find(faxis <= toF);
 			higher = higher(end);
 			
-			power = sum(self.Data(lower:higher) .* conj(self.Data(lower:higher)));
+			power = sum(self.Data(lower:higher) .* conj(self.Data(lower:higher))) / ...
+				(higher-lower);
 		end
 		
 		function writeF(self, fdata)
@@ -40,8 +41,8 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			% necessary because of addition of padding
 			self.Length = length(data);
 			
-			disp('Power in time Domain:')
-			disp(sum(data.^2));
+			%disp('Power in time Domain:')
+			%disp(sum(data.^2));
 			
 			% Add data on the medium
 			self.Data = self.Data + fft(data, self.NFFT);

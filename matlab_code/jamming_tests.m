@@ -51,16 +51,16 @@ chippingRate = 20;
 
 pnGenerator = PNGenerator(3*12);
 sequence = pnGenerator.step();
-sender = Sender(medium, sequence, 'dsss', Fs, dataRate,chippingRate);
+sender = Sender(medium, sequence, 'fhss', Fs, dataRate,chippingRate);
 
 jammer = Jammer(medium, Fs);
 
 test_data = randi([0,1],20,1);
 
 sender.send(test_data);
-jammer.jam(150, 20, 20); %frequency, bandwidth, snr in db
+jammer.jam(100, 10, 8); %frequency, bandwidth, snr in db
 
-receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
+receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
 
 received = receiver.receive();
 

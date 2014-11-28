@@ -53,7 +53,7 @@ classdef Receiver < Node
 				for i = 0:chipNum-1
 					part = mData(i*chipLength+1:(i+1)*chipLength);
 					channel = channels(i+1);
-					partDemodulated = pmdemod(part,self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
+					partDemodulated = pmdemod(real(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
 					demodulated = [demodulated;partDemodulated];
 				end
 				
