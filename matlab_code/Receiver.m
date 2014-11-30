@@ -35,20 +35,21 @@ classdef Receiver < Node
 				% calculate channel nr. using Pn sequence
 				channels = self.getChannelNr();
 				
-				% demodulate data
+				% compute some parameters
 				symbolLength = self.SampleRate/self.DataRate;
 				numOfSymbols = length(mData)/symbolLength;
 				
 				chipLength = self.SampleRate/self.ChippingRate;
 				chipNum = ceil(length(mData)/chipLength);
 				
+                % adjust chip sequence length to data length
 				factor = ceil(chipNum/length(channels));
-				
 				if factor > 1
 					channels = repmat(channels,factor,1);
 				end
 				channels = channels(1:chipNum);
 				
+                %demodulate and slice data per chip
 				demodulated = [];
 				for i = 0:chipNum-1
 					part = mData(i*chipLength+1:(i+1)*chipLength);
@@ -59,8 +60,9 @@ classdef Receiver < Node
 				
 				if ProjectSettings.verbose
 					figure; plot(demodulated); title('Demodulated Signal');
-				end
+                end
 				
+                %evaluate per slice
 				recoveredData = [];
 				for i = 0:numOfSymbols-1
 					part = demodulated(i*symbolLength+1:(i+1)*symbolLength);
@@ -68,6 +70,7 @@ classdef Receiver < Node
 					recoveredData = [recoveredData;value];
 				end
 				data_despread = recoveredData;
+                %convert to logical
 				data_despread = im2bw(data_despread,0.5);
 			elseif strcmp(self.Mode, 'none')
 				% demodulate data
