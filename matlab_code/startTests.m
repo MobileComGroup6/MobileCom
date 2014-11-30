@@ -35,15 +35,15 @@ else
 end   
 
 % for each testcase run testExe
-% testExe(  mode,   dataRate,   chippingRates,  chipLengths,    numberOfSenders,    jammingMode,    freqs,   powers,	randomNumbers,  repetitions)
+% testExe(  mode,   dataRate,   chippingRates,  chipLengths,    numberOfSenders,        freqs,    bandwidths,   snrs,	randomNumbers,  repetitions)
 
 %DSSS Tests
 %test-case d1: DSSS with wideband noise
-% testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                  'wideband',     100,    [1:20],   randomNumbers,  repetitions);
+% testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    100,        30,    [5:10],   randomNumbers,  repetitions);
 %test-case d2: DSSS with multiple users
-% testExe(    'dsss', dataRate,   chippingRate,   chipLength,     maxNumberOfSenders,                  'wideband',     100,    [1],   randomNumbers,  repetitions);
+% testExe(    'dsss', dataRate,   chippingRate,   chipLength,     maxNumberOfSenders,   100,        30    [8],   randomNumbers,  repetitions);
 
 
 %FHSS tests
 %test-case f1
-testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                  'narrowband',   [100:5:150],  1,      randomNumbers,  repetitions);
+testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   [100:5:150],   30,  8,      randomNumbers,  repetitions);
