@@ -35,15 +35,21 @@ else
 end   
 
 % for each testcase run testExe
-% testExe(  mode,   dataRate,   chippingRates,  chipLengths,    numberOfSenders,    jammingMode,    freqs,   powers,	randomNumbers,  repetitions)
+% testExe(  mode,   dataRate,   chippingRates,  chipLengths,    numberOfSenders,        freqs,    bandwidths,   snrs,	randomNumbers,  repetitions)
 
 %DSSS Tests
 %test-case d1: DSSS with wideband noise
-% testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                  'wideband',     100,    [1:20],   randomNumbers,  repetitions);
-%test-case d2: DSSS with multiple users
-% testExe(    'dsss', dataRate,   chippingRate,   chipLength,     maxNumberOfSenders,                  'wideband',     100,    [1],   randomNumbers,  repetitions);
+ testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    100,          100,       [0.1:0.1:1],  randomNumbers,  repetitions);
+%test-case d2: DSSS with narrowband noise
+ testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    100,          10,       [1:10],  randomNumbers,  repetitions);
+%test-case d3: DSSS with multiple users
+ testExe(    'dsss', dataRate,   chippingRate,   chipLength,     5,                    100,          30,        [8],    randomNumbers,  repetitions);
 
 
 %FHSS tests
-%test-case f1
-testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                  'narrowband',   [100:5:150],  1,      randomNumbers,  repetitions);
+%test-case f1: FHSS with wideband noise, jamming frequency in middle of the channels with a bandwidth of all 8 channels
+ testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   100+4*30,   240,         0.1,     randomNumbers,  repetitions);
+%test-case f2: FHSS with narrowband noise, jamming just one channel (#3)
+ testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   100+2*30,    30,         0.1,     randomNumbers,  repetitions);
+%test-case f3: FHSS with multiple users
+ testExe(    'fhss', dataRate,   chippingRate,   chipLength,     5,                   100,   30,         8,     randomNumbers,  repetitions);
