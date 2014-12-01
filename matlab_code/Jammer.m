@@ -41,6 +41,8 @@ classdef Jammer < SendingNode
 			noiseFFT = zeros(1, NFFT);
 			noiseFFT(lower:higher) = cnoise;
 			
+			%figure; plot(faxis, log(abs(noiseFFT).^2/NFFT+1)); title('Noise FFT');
+			
 			self.Medium.writeF(noiseFFT');
 		end
 	end
