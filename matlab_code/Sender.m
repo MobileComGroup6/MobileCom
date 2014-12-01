@@ -1,8 +1,14 @@
 classdef Sender < SendingNode
 	%Properties
-	properties (Access = private)
-		pnCode
+    
+    properties (Access = public)
+        pnCode
 		numOfSamples
+        power = 1;
+    end
+	properties (Access = private)
+		
+        
 	end
 	
 	%Methods
@@ -15,8 +21,15 @@ classdef Sender < SendingNode
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
-		end
+        end
 		
+        
+        function sendPower(self, data, power)
+            self.power = power;
+            send(self, data);
+            self.power = 1;
+        end
+        
 		function send(self, data)
 			if ProjectSettings.verbose
 				disp('Sending data:');
@@ -74,7 +87,7 @@ classdef Sender < SendingNode
 			end
 			
 			% write data to medium
-			self.Medium.write(mData);
+			self.Medium.write(self.power.*mData);
 		end
 	end
 	

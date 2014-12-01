@@ -5,7 +5,8 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 		Data
 		Length
 		NFFT = 1e5; % inserts (NFFT - length(Data)) padding to FFT
-	end
+        
+    end
 	
 	%Methods
 	methods
@@ -28,12 +29,16 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			higher = higher(end);
 			
 			power = sum(abs(self.Data(lower:higher)).^2) / self.NFFT;
-		end
+        end
+        
+        function data = getData(self)
+            data = self.Data;
+        end
 		
 		function writeF(self, fdata)
 			self.Data = self.Data + fdata;
-			self.visualizeSpectrum();
-		end
+            self.visualizeSpectrum();
+        end
 		
 		function write(self, data)
 			% Store original data length, so we can restore signal later,
@@ -60,7 +65,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 				% here
 				faxis = 10000/2*linspace(0,1,self.NFFT/2+1);
 				
-				fft_vis = log(abs(self.Data)+1)/self.NFFT;
+				fft_vis = abs(self.Data)/self.NFFT;
 				fft_vis = fft_vis(1:self.NFFT/2+1);
 				plot(faxis(1:6000), fft_vis(1:6000)); title('Data on Medium');
 				xlabel('Frequency (Hz)');
@@ -77,7 +82,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			data = data(1:self.Length);
 			
 			figure;
-			plot(real(data(1:200))); title('IFFT Signal');
+			plot(real(data)); title('IFFT Signal');
 		end
 		
 		function clear(self)

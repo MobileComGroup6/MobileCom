@@ -1,32 +1,34 @@
-classdef Jammer < SendingNode
+classdef Jammer < Sender
 	
 	%Properties
 	properties (Access = private)
 		JammingMode
+        realMedium
 	end
 	
 	%Methods
 	methods
 		%class constructor
-		function self = Jammer(medium, samplingRate)
-			self.Medium = medium;
-			self.SampleRate = samplingRate;
+		function self = Jammer(medium, samplingRate)			
+            pnGenerator = PNGenerator(3*12);
+            pnCode = pnGenerator.step();
+            med = Medium();
+            self = self@Sender(med, pnCode, 'dsss', samplingRate, 4, 40);
+            self.realMedium = medium;
 		end
 		
-		function send(self, data)
-		end
 		
-		function jam(self, frequency, bandwidth, snr)
-			
-			lowerF = frequency-bandwidth/2;
+		function jam(self, frequency, bandwidth, power)
+			pnGenerator = PNGenerator(3*12);
+            self.pnCode = pnGenerator.step();
+            data = pnGenerator.step();
+            self.CarrierFrequency = frequency;
+            self.ChippingRate = round(bandwidth/2);
+            
+            lowerF = frequency-bandwidth/2;
 			higherF = frequency+bandwidth/2;
-			
-			signalPower = self.Medium.getPower(lowerF, higherF);
-			noisePower = signalPower / (10^(snr/10));
-			
-			height = noisePower / bandwidth;
-			
-			NFFT = self.Medium.getNFFT();			
+            
+            NFFT = self.Medium.getNFFT();			
 			faxis = (0:NFFT-1)*(self.SampleRate/NFFT);
 			
 			lower = find(faxis >= lowerF);
@@ -34,14 +36,14 @@ classdef Jammer < SendingNode
 			
 			higher = find(faxis <= higherF);
 			higher = higher(end);
-			
-			range = length(lower:higher);
-			cnoise = self.generateComplexNoise(range, height);
-			
-			noiseFFT = zeros(1, NFFT);
-			noiseFFT(lower:higher) = cnoise;
-			
-			self.Medium.writeF(noiseFFT');
+            
+            self.sendPower(data,power);
+            spectrum = self.Medium.getData();
+            spectrum(1:lower) = 0;
+            spectrum(higher:end) = 0;
+            self.realMedium.writeF(spectrum);
+            
+            
 		end
 	end
 	
