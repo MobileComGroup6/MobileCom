@@ -1,4 +1,5 @@
 classdef Jammer < SendingNode
+	
 	%Properties
 	properties (Access = private)
 		JammingMode
@@ -34,15 +35,21 @@ classdef Jammer < SendingNode
 			higher = find(faxis <= higherF);
 			higher = higher(end);
 			
+			range = length(lower:higher);
+			cnoise = self.generateComplexNoise(range, height);
+			
 			noiseFFT = zeros(1, NFFT);
-			noiseFFT(lower:higher) = height;
+			noiseFFT(lower:higher) = cnoise;
 			
 			self.Medium.writeF(noiseFFT');
 		end
 	end
 	
 	methods (Access=private)
-	
+		function cnoise = generateComplexNoise(self, length, absolute)
+			phase = 2*pi*rand(1, length);
+			cnoise = absolute * exp(1i.*phase);
+		end
 	end
 	
 end

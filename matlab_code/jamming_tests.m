@@ -47,7 +47,7 @@ Fs = 10000;
 medium = Medium;
 
 dataRate = 4;
-chippingRate = 20;
+chippingRate = 40;
 
 pnGenerator = PNGenerator(3*12);
 sequence = pnGenerator.step();
@@ -55,15 +55,28 @@ sender = Sender(medium, sequence, 'fhss', Fs, dataRate,chippingRate);
 
 jammer = Jammer(medium, Fs);
 
-test_data = randi([0,1],20,1);
+test_data = randi([0,1],10,1);
 
 sender.send(test_data);
-jammer.jam(100, 10, 8); %frequency, bandwidth, snr in db
+jammer.jam(300, 500, -20); %frequency, bandwidth, snr in db
 
 receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
 
 received = receiver.receive();
 
 assert(isequal(test_data, received));
+
+
+%%
+clear all;
+close all;
+clc;
+
+signal = randi([0 7], 2000, 1);
+mod = pmmod(signal, 100, 4096, pi/2);
+
+noise = comm.AWGNChannel('SNR', 10);
+
+
 
 

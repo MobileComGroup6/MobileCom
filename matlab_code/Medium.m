@@ -4,7 +4,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 	properties (Access = private)
 		Data
 		Length
-		NFFT = 100000; % inserts (NFFT - length(Data)) padding to FFT
+		NFFT = 1e5; % inserts (NFFT - length(Data)) padding to FFT
 	end
 	
 	%Methods
@@ -27,8 +27,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			higher = find(faxis <= toF);
 			higher = higher(end);
 			
-			power = sum(self.Data(lower:higher) .* conj(self.Data(lower:higher))) / ...
-				(higher-lower);
+			power = sum(abs(self.Data(lower:higher)).^2) / self.NFFT;
 		end
 		
 		function writeF(self, fdata)
@@ -46,6 +45,9 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			
 			% Add data on the medium
 			self.Data = self.Data + fft(data, self.NFFT);
+			
+			%disp('Power in Freq Domain:')
+			%disp(sum(abs(self.Data).^2)/self.NFFT);
 						
 			self.visualizeSpectrum();
 		end
@@ -54,12 +56,13 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			if ProjectSettings.verbose
 				% Visualize data on Medium (passband, not baseband)
 				figure;
-				% 1000 is sampling frequency, should be some kind of variable
+				% 10000 is sampling frequency, should be some kind of variable
 				% here
 				faxis = 10000/2*linspace(0,1,self.NFFT/2+1);
-				fft_vis = abs(self.Data)/self.NFFT;
+				
+				fft_vis = log(abs(self.Data)+1)/self.NFFT;
 				fft_vis = fft_vis(1:self.NFFT/2+1);
-				plot(faxis(1:4000), fft_vis(1:4000)); title('Data on Medium');
+				plot(faxis(1:6000), fft_vis(1:6000)); title('Data on Medium');
 				xlabel('Frequency (Hz)');
 			end
 		end
@@ -72,6 +75,9 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 			% read data
 			data = ifft(self.Data, self.NFFT);
 			data = data(1:self.Length);
+			
+			figure;
+			plot(real(data(1:200))); title('IFFT Signal');
 		end
 		
 		function clear(self)
