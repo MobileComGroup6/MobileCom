@@ -51,22 +51,22 @@ classdef Sender < SendingNode
 				chipLength = self.SampleRate/self.ChippingRate;
 				chipNum = ceil(length(mData)/chipLength);
 				
-                %adjust chipping sequence length to data length
-				factor = ceil(chipNum/length(channels));				
+				%adjust chipping sequence length to data length
+				factor = ceil(chipNum/length(channels));
 				if factor > 1
 					channels = repmat(channels,factor,1);
 				end
 				channels = channels(1:chipNum);
 				
-                %slice sampled data and modulate per chip
+				%slice sampled data and modulate per chip
 				toSend = [];
 				for i = 0:chipNum-1
 					part = mData(i*chipLength+1:(i+1)*chipLength);
 					channel = channels(i+1);
 					partModulated = pmmod(double(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
 					toSend = [toSend;partModulated];
-                end
-                %send data
+				end
+				%send data
 				mData = toSend;
 			elseif strcmp(self.Mode, 'none')
 				% modulate data
@@ -77,7 +77,7 @@ classdef Sender < SendingNode
 			end
 			
 			% Add Noise
-			%mData = awgn(mData, 10, 'measured');
+			mData = awgn(mData, 10, 'measured');
 			
 			if ProjectSettings.verbose
 				% Visualize data sent to medium

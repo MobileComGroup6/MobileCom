@@ -13,7 +13,7 @@ classdef Jammer < Sender
             pnGenerator = PNGenerator(3*12);
             pnCode = pnGenerator.step();
             med = Medium();
-            self = self@Sender(med, pnCode, 'dsss', samplingRate, 4, 40);
+            self = self@Sender(med, pnCode, 'dsss', samplingRate, 4, 16);
             self.realMedium = medium;
 		end
 		

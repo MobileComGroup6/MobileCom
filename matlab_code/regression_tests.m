@@ -9,13 +9,13 @@ clear all
 close all
 clc
 
-samplesPerSecond = 10000;
+samplesPerSecond = 4096;
 %% Send an receive random data using DSSS without noise
 
 %setup
 
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 64;
 medium = Medium;
 pnGenerator = PNGenerator(100);
 sequence = pnGenerator.step();
@@ -35,7 +35,7 @@ end
 
 %setup
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 64;
 medium = Medium;
 pnGenerator = PNGenerator(3*12);
 sequence = pnGenerator.step();
@@ -56,7 +56,7 @@ end
 
 %setup
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 64;
 medium = Medium;
 pnGenerator = PNGenerator(4);
 sequence = pnGenerator.step();
@@ -77,7 +77,7 @@ end
 
 %setup
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 64;
 medium = Medium;
 pnGenerator = PNGenerator(3*4);
 sequence = pnGenerator.step();
@@ -97,7 +97,7 @@ end
 
 %setup
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 64;
 medium = Medium;
 pnGenerator = PNGenerator(100);
 sequence = pnGenerator.step();
@@ -121,7 +121,7 @@ end
 
 %setup
 dataRate = 4;
-chippingRate = 50;
+chippingRate = 64;
 medium = Medium;
 pnGenerator = PNGenerator(3*12);
 sequence = pnGenerator.step();
