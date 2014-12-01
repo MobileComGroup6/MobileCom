@@ -10,7 +10,7 @@ classdef Jammer < Sender
 	methods
 		%class constructor
 		function self = Jammer(medium, samplingRate)			
-            pnGenerator = PNGenerator(3*12);
+            pnGenerator = PNGenerator(128);
             pnCode = pnGenerator.step();
             med = Medium();
             self = self@Sender(med, pnCode, 'dsss', samplingRate, 4, 16);
@@ -19,7 +19,7 @@ classdef Jammer < Sender
 		
 		
 		function jam(self, frequency, bandwidth, power)
-			pnGenerator = PNGenerator(3*12);
+			pnGenerator = PNGenerator(128);
             self.pnCode = pnGenerator.step();
             data = pnGenerator.step();
             self.CarrierFrequency = frequency;

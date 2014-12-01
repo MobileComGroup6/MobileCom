@@ -20,13 +20,16 @@ test_data = randi([0,1],100,1);
 
 sender.send(test_data);
 
-jammer.jam(100, 20, 2); %frequency, bandwidth, power in multiples of standard output
+jammer.jam(100, 16 , 2.5); %frequency, bandwidth (power of 2 optimally), power in multiples of standard output
 
 
 receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
 
 received = receiver.receive();
 
+
+
+biterrors = sum(abs(test_data-received))
 assert(isequal(test_data, received));
 
 
