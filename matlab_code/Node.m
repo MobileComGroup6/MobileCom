@@ -14,7 +14,7 @@ classdef Node < handle %handle is superclass and provides event machanisms
 	methods (Access=protected)
 		function sampledData = sampleData(self, data, rate)
 			%sample the sequence
-			partLength = self.SampleRate / rate;
+			partLength = int32(self.SampleRate / rate);
 			sampledData = repmat(data', [partLength, 1, 1]);
 			sampledData = sampledData(:);
 		end

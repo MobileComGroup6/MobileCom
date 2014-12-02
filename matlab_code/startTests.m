@@ -18,7 +18,7 @@ dataRate= 10;
 dataLength = 10;
 chippingRate = [10];
 chipLength = [10];%,100,1000];
-repetitions = 30;
+repetitions = 1;
 maxNumberOfSenders = 200;
 %load or save random numbers, so the same numbers can be used for all
 %tests
@@ -35,21 +35,25 @@ else
 end   
 
 % for each testcase run testExe
-% testExe(  mode,   dataRate,   chippingRates,  chipLengths,    numberOfSenders,        freqs,    bandwidths,   snrs,	randomNumbers,  repetitions)
+% testExe(mode, dataRate, chippingRates, chipLengths, numberOfSenders, freqs, powers, bandwidths, randomNumbers, repetitions)
+
+ProjectSettings.saveResultPlots(true);
 
 %DSSS Tests
 %test-case d1: DSSS with wideband noise
- testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    100,          100,       [0.1:0.1:1],  randomNumbers,  repetitions);
+ %testExe(    'dsss', dataRate,   chippingRate,   chipLength,     [1:2:11],                    100,          0,       100,  randomNumbers,  repetitions);
+ %testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    200,          [0:2:10],       1000,  randomNumbers,  repetitions);
+ testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    [70:30:8*30+100],          100,       30,  randomNumbers,  repetitions);
 %test-case d2: DSSS with narrowband noise
- testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    100,          10,       [1:10],  randomNumbers,  repetitions);
+ %testExe(    'dsss', dataRate,   chippingRate,   chipLength,     1,                    100,          10,       [1:10],  randomNumbers,  repetitions);
 %test-case d3: DSSS with multiple users
- testExe(    'dsss', dataRate,   chippingRate,   chipLength,     5,                    100,          30,        [8],    randomNumbers,  repetitions);
+ %testExe(    'dsss', dataRate,   chippingRate,   chipLength,     5,                    100,          30,        [8],    randomNumbers,  repetitions);
 
 
 %FHSS tests
 %test-case f1: FHSS with wideband noise, jamming frequency in middle of the channels with a bandwidth of all 8 channels
- testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   100+4*30,   240,         0.1,     randomNumbers,  repetitions);
+ %testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   100+4*30,   240,         0.1,     randomNumbers,  repetitions);
 %test-case f2: FHSS with narrowband noise, jamming just one channel (#3)
- testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   100+2*30,    30,         0.1,     randomNumbers,  repetitions);
+ %testExe(    'fhss', dataRate,   chippingRate,   chipLength,     1,                   100+2*30,    30,         0.1,     randomNumbers,  repetitions);
 %test-case f3: FHSS with multiple users
- testExe(    'fhss', dataRate,   chippingRate,   chipLength,     5,                   100,   30,         8,     randomNumbers,  repetitions);
+ %testExe(    'fhss', dataRate,   chippingRate,   chipLength,     5,                   100,   30,         8,     randomNumbers,  repetitions);

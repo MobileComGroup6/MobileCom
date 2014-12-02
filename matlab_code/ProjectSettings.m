@@ -12,6 +12,19 @@ classdef ProjectSettings
             out = verbose;
             
         end
+        
+        function out = saveResultPlots(in)
+            persistent saveResultPlots;
+            if isempty(saveResultPlots)
+                saveResultPlots = true;
+            end
+            if nargin
+                saveResultPlots = in;
+            end
+            out = saveResultPlots;
+            
+        end
+        
     end
     
 end
