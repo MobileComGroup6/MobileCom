@@ -108,7 +108,7 @@ classdef Receiver < Node
 			
 			data_despread = xor(sampledData, pnSampled);
 			
-			symbolLength = self.SampleRate/self.DataRate;
+			symbolLength = int32(self.SampleRate/self.DataRate);
 			numOfSymbols = length(data_despread)/symbolLength;
 			
 			mat = reshape(data_despread,symbolLength,numOfSymbols,1);

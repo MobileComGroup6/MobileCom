@@ -1,6 +1,6 @@
 function testExe(mode, dataRate, chippingRates, chipLengths, numberOfSenders, freqs, powers, bandwidths, randomNumbers, repetitions)
 %% setup
-samplesPerSecond = 10000;
+samplesPerSecond = 4096;
 medium = Medium;
 
 %create power array with frequency and power
@@ -85,14 +85,9 @@ for chippingRate = chippingRates
                     msgsSent = msgsSentIntermediate;
                     
                     %jam on different frequencies or with different power
-                    % display jamming graphics for DEBUG
-%                      if jammingPara == jammingParaLength  
-%                         ProjectSettings.verbose(true);
-%                      end
                     for f = freq
                         jammer.jam(f, bandwidth, power);
                     end
-%                     ProjectSettings.verbose(false);
 
                     receivedData(:,testRepetition+1) = receiver.receive();
                     medium.clear();
