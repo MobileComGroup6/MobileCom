@@ -43,6 +43,7 @@ classdef Jammer < Sender
             spectrum(higher:end) = 0;
             self.realMedium.writeF(spectrum);
             
+            self.Medium.clear();
             
 		end
 	end

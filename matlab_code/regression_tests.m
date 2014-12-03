@@ -148,3 +148,28 @@ rng(seed)
 randi(10, 3)
 rng(seed)
 randi(10, 3)
+%% Test clear medium
+
+%setup
+dataRate = 4;
+chippingRate = 64;
+medium = Medium;
+pnGenerator = PNGenerator(3*12);
+sequence = pnGenerator.step();
+sender = Sender(medium, sequence, 'fhss',samplesPerSecond, dataRate,chippingRate);
+receiver = Receiver(medium, sequence, 'fhss',samplesPerSecond, dataRate,chippingRate);
+sequence = pnGenerator.step();
+receiver2 = Receiver(medium, sequence, 'fhss',samplesPerSecond, dataRate,chippingRate);
+test_data = randi([0,1],10,1);
+
+jammer = Jammer(medium, samplesPerSecond);
+
+%test
+sender.send(test_data(:));
+jammer.jam(100, 100, 0.01);
+data_rec = receiver.receive();
+assert(isequal(test_data(:), data_rec));
+
+medium.clear();
+data_rec = receiver.receive();
+assert(isequal(data_rec, zeros(size(data_rec))));

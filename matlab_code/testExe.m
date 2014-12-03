@@ -1,7 +1,7 @@
-function testExe(mode, dataRate, chippingRates, chipLengths, numberOfSenders, freqs, powers, bandwidths, randomNumbers, repetitions)
+function testExe(mode, dataRate, chippingRates, chipLengths, numberOfSenders, freqs, powers, bandwidths, randomNumbers, repetitions, testName)
 %% setup
 samplesPerSecond = 4096;
-medium = Medium;
+medium = Medium();
 
 %create power array with frequency and power
 %only the FHSS, narrow-band test uses more than one frequency
@@ -39,7 +39,10 @@ for chippingRate = chippingRates
                     pnGenerator = PNGenerator(chipLength);
                     %the receiver and the FIRST sender get the same chip sequence
                     sequence = pnGenerator.step();
-
+                    
+                    %medium.clear() has probably a bug, so creating a new medium
+                    %each time instead
+                    medium = Medium();
                     receiver = Receiver(medium, sequence, mode, samplesPerSecond, dataRate,chippingRate);
                     jammer = Jammer(medium, samplesPerSecond);
 
@@ -98,10 +101,10 @@ for chippingRate = chippingRates
 
                 meanBitError = mean(bitErrors);
                 relativeMeanBitError = meanBitError / size(randomNumbers,1);
-
+        
                 % test result contains: chippingRate,chipLength,freqs, powers, bit errors
                 testResults(:,configRan+1) = [ chippingRate, chipLength, jammingPara, power, bandwidth, numberOfSender, meanBitError, relativeMeanBitError];
-
+                receivedData = zeros(size(receivedData));
                 configRan = configRan+1;
             end
             
@@ -114,6 +117,8 @@ end
 ProjectSettings.verbose(true);
 h = figure;
 count = 1;
+colors = {'b-*','r-*','g-*','y-*';'b--o','r--o','g--o','y--o'};
+
 for i = 1:length(chippingRates)
     for j = 1:length(chipLengths)
         start = 1+(count-1)*jammingParaLength;
@@ -133,7 +138,7 @@ for i = 1:length(chippingRates)
             x = 'Number of senders';
         end
         Y = 100*testResults(8,start:ende);
-        scatter(X,Y);
+        plot(X,Y, colors{j+length(chipLengths)*(i-1)});
         xlabel(x);
         ylabel('Bit error rate (%)');
         hold on
@@ -143,11 +148,11 @@ for i = 1:length(chippingRates)
         count = count+1;
     end
 end
-legend(legendEntries);
+legend(legendEntries,'Location','northwest');
 hold off
 
 if ProjectSettings.saveResultPlots
-    filename = 'output/plot';
+    filename = ['output/plot_',mode, '_',testName,'_'];
     c = fix(clock);
     for i = 1:length(clock)
         filename = [filename, '-', num2str(c(i))];
