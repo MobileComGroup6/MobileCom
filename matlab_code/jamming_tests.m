@@ -2,7 +2,7 @@
 %clear all;
 close all;
 clc;
-
+ProjectSettings.verbose = true;
 Fs = 4096;
 
 medium = Medium;
