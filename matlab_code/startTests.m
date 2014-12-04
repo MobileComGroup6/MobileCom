@@ -29,7 +29,7 @@ chippingRateDSSS = [16, 32, 96];
 chipLength = [16,64]; %must be at least 4
 repetitions = 2;
 maxNumberOfSenders = 200;
-gaussSNR = 1;
+gaussSNR = 10;
 %load or save random numbers, so the same numbers can be used for all
 %tests
 if loadRandom
@@ -54,7 +54,7 @@ ProjectSettings.saveResultPlots(true);
 %DSSS with multiple users
 testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     [1:2:15],   gaussSNR,   100,	0,          100,	randomNumbers,  repetitions, 'numSenders');
 
-DSSS with wideband noise
+%DSSS with wideband noise
 testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:3:15],	1000,	randomNumbers,  repetitions, 'wideband');
  
 %DSSS narrowband
@@ -86,4 +86,4 @@ testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          
 
 
 %Different gaussian SNR
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          [1:-1:-5],	300,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');
+testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          [-2:-1:-10],	300,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');

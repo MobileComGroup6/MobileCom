@@ -1,14 +1,15 @@
 classdef Sender < SendingNode
 	%Properties
-    
-    properties (Access = public)
-        pnCode
+	
+	properties (Access = public)
+		pnCode
 		numOfSamples
-        power = 1;
-    end
+		power = 1;
+		gaussianSNR = 10;
+	end
 	properties (Access = private)
 		
-        
+		
 	end
 	
 	%Methods
@@ -21,15 +22,18 @@ classdef Sender < SendingNode
 			self.SampleRate = samplesPerSecond;
 			self.DataRate = dataRate;
 			self.ChippingRate = chippingRate;
-        end
+		end
 		
-        
-        function sendPower(self, data, power)
-            self.power = power;
-            send(self, data);
-            self.power = 1;
-        end
-        
+		function setGaussianSNR(self, snr)
+			self.gaussianSNR = snr;
+		end
+		
+		function sendPower(self, data, power)
+			self.power = power;
+			send(self, data);
+			self.power = 1;
+		end
+		
 		function send(self, data)
 			if ProjectSettings.verbose
 				disp('Sending data:');
@@ -77,7 +81,7 @@ classdef Sender < SendingNode
 			end
 			
 			% Add Noise
-			mData = awgn(mData, 10, 'measured');
+			mData = awgn(mData, self.gaussianSNR, 'measured');
 			
 			if ProjectSettings.verbose
 				% Visualize data sent to medium

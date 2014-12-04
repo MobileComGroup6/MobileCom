@@ -84,8 +84,9 @@ for chippingRate = chippingRates
                     %TODO: USE snr WHEN SENDIN!
                     %create senders
                     for senderNumber = 1:numberOfSender
-                        senders(senderNumber) = Sender(medium, sequence, mode, samplesPerSecond, dataRate,chippingRate);
-                        sequence = pnGenerator.step();
+											senders(senderNumber) = Sender(medium, sequence, mode, samplesPerSecond, dataRate,chippingRate);
+											senders(senderNumber).setGaussianSNR(gaussSNR(jammingPara));
+											sequence = pnGenerator.step();
                     end
 
                     %save data to compare with received data
