@@ -85,7 +85,7 @@ for chippingRate = chippingRates
                     %create senders
                     for senderNumber = 1:numberOfSender
 											senders(senderNumber) = Sender(medium, sequence, mode, samplesPerSecond, dataRate,chippingRate);
-											senders(senderNumber).setGaussianSNR(gaussSNR(jammingPara));
+											senders(senderNumber).setGaussianSNR(snr);
 											sequence = pnGenerator.step();
                     end
 
