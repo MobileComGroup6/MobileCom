@@ -1,22 +1,25 @@
-function testExe(mode, dataRate, chippingRates, chipLengths, numberOfSenders, freqs, powers, bandwidths, randomNumbers, repetitions, testName)
+function testExe(mode, dataRate, chippingRates, chipLengths, numberOfSenders, gaussSNR, freqs, powers, bandwidths, randomNumbers, repetitions, testName)
 %% setup
 samplesPerSecond = 4096;
 medium = Medium();
 
 %create power array with frequency and power
 %only the FHSS, narrow-band test uses more than one frequency
-if length(freqs) > 1 && length(powers) == 1 && length(bandwidths) == 1 && length(numberOfSenders) == 1
+if length(freqs) > 1 && length(powers) == 1 && length(bandwidths) == 1 && length(numberOfSenders) == 1 && length(gaussSNR) == 1
     jammingMode = 'frequency';
     jammingParaLength = length(freqs);
-elseif length(freqs) == 1 && length(powers) > 1 && length(bandwidths) == 1 && length(numberOfSenders) == 1
+elseif length(freqs) == 1 && length(powers) > 1 && length(bandwidths) == 1 && length(numberOfSenders) == 1 && length(gaussSNR) == 1
     jammingMode = 'power';
     jammingParaLength = length(powers);
-elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) > 1 && length(numberOfSenders) == 1
+elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) > 1 && length(numberOfSenders) == 1 && length(gaussSNR) == 1
     jammingMode = 'bandwidth';
     jammingParaLength = length(bandwidths);
-elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) == 1 && length(numberOfSenders) > 1
+elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) == 1 && length(numberOfSenders) > 1 && length(gaussSNR) == 1
     jammingMode = 'numberOfSenders';
     jammingParaLength = length(numberOfSenders);
+elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) == 1 && length(numberOfSenders) == 1 && length(gaussSNR) > 1
+    jammingMode = 'gaussSNR';
+    jammingParaLength = length(gaussSNR);
 else
     error('invalid jamming argument length');
 end    
@@ -51,23 +54,34 @@ for chippingRate = chippingRates
                         power = powers;
                         bandwidth = bandwidths;
                         numberOfSender = numberOfSenders;
+                        snr = gaussSNR;
                     elseif strcmp(jammingMode,'power')
                         freq = freqs;
                         power = powers(jammingPara);
                         bandwidth = bandwidths;
                         numberOfSender = numberOfSenders;
+                        snr = gaussSNR;
                     elseif strcmp(jammingMode,'bandwidth')
                         freq = freqs;
                         power = powers;
                         bandwidth = bandwidths(jammingPara);
                         numberOfSender = numberOfSenders;
+                        snr = gaussSNR;
                     elseif strcmp(jammingMode,'numberOfSenders')
                         freq = freqs;
                         power = powers;
                         bandwidth = bandwidths;
                         numberOfSender = numberOfSenders(jammingPara);
+                        snr = gaussSNR;
+                    elseif strcmp(jammingMode,'gaussSNR')
+                        freq = freqs;
+                        power = powers;
+                        bandwidth = bandwidths;
+                        numberOfSender = numberOfSenders;
+                        snr = gaussSNR(jammingPara);
                     end
-
+                    
+                    %TODO: USE snr WHEN SENDIN!
                     %create senders
                     for senderNumber = 1:numberOfSender
                         senders(senderNumber) = Sender(medium, sequence, mode, samplesPerSecond, dataRate,chippingRate);
@@ -103,7 +117,7 @@ for chippingRate = chippingRates
                 relativeMeanBitError = meanBitError / size(randomNumbers,1);
         
                 % test result contains: chippingRate,chipLength,freqs, powers, bit errors
-                testResults(:,configRan+1) = [ chippingRate, chipLength, jammingPara, power, bandwidth, numberOfSender, meanBitError, relativeMeanBitError];
+                testResults(:,configRan+1) = [ chippingRate, chipLength, jammingPara, power, bandwidth, numberOfSender, snr, meanBitError, relativeMeanBitError];
                 receivedData = zeros(size(receivedData));
                 configRan = configRan+1;
             end
@@ -117,7 +131,7 @@ end
 ProjectSettings.verbose(true);
 h = figure;
 count = 1;
-colors = {'b-*','r-*','g-*','y-*';'b--o','r--o','g--o','y--o'};
+colors = {'b-*','r-*','g-*','k-*';'b--o','r--o','g--o','k--o'};
 
 for i = 1:length(chippingRates)
     for j = 1:length(chipLengths)
@@ -136,9 +150,13 @@ for i = 1:length(chippingRates)
         elseif strcmp(jammingMode,'numberOfSenders')
             X = testResults(6,start:ende);
             x = 'Number of senders';
+        elseif strcmp(jammingMode,'gaussSNR')
+            X = testResults(7,start:ende);
+            x = 'SNR of gaussian noise';            
         end
-        Y = 100*testResults(8,start:ende);
-        plot(X,Y, colors{j+length(chipLengths)*(i-1)});
+        Y = 100*testResults(9,start:ende);
+        color = colors{j+length(chipLengths)*(i-1)}
+        plot(X,Y,color);
         xlabel(x);
         ylabel('Bit error rate (%)');
         hold on
@@ -148,11 +166,11 @@ for i = 1:length(chippingRates)
         count = count+1;
     end
 end
-legend(legendEntries,'Location','northwest');
+legend(legendEntries,'Location','southeast');
 hold off
 
 if ProjectSettings.saveResultPlots
-    filename = ['output/plot_',mode, '_',testName,'_'];
+    filename = ['output/plot_mode_',mode, '-test_',testName,'-rep_',num2str(repetitions) ,'-dataRate_',num2str(dataRate),'-dataLength_', num2str(size(randomNumbers,1)),'_'];
     c = fix(clock);
     for i = 1:length(clock)
         filename = [filename, '-', num2str(c(i))];
