@@ -156,7 +156,7 @@ for i = 1:length(chippingRates)
             x = 'SNR of gaussian noise';            
         end
         Y = 100*testResults(9,start:ende);
-        color = colors{j+length(chipLengths)*(i-1)}
+        color = colors{j+length(chipLengths)*(i-1)};
         plot(X,Y,color);
         xlabel(x);
         ylabel('Bit error rate (%)');
