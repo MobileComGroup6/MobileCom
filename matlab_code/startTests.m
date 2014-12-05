@@ -27,7 +27,7 @@ chippingRateFHSS = chippingRateFHSS * dataRate;
 %absolute values
 chippingRateDSSS = [16, 32, 64, 96];
 chipLength = [16,64]; %must be at least 4
-repetitions = 20;
+repetitions = 2;
 maxNumberOfSenders = 200;
 gaussSNR = 10;
 %load or save random numbers, so the same numbers can be used for all
@@ -55,16 +55,16 @@ ProjectSettings.saveResultPlots(true);
 % testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     [1:1:15],   gaussSNR,   100,	0,          100,	randomNumbers,  repetitions, 'numSenders');
 
 % DSSS with wideband noise
-testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:1:15],	1000,	randomNumbers,  repetitions, 'wideband');
+% testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:1:15],	1000,	randomNumbers,  repetitions, 'wideband');
 
 %DSSS narrowband
 %TODO: This is still weird!
-testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:1:15],	16,     randomNumbers,  repetitions, 'narrowband');
+% testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:1:15],	16,     randomNumbers,  repetitions, 'narrowband');
 
 %DSSS with different bandwidthes
 %TODO: The SNR recreases, the wider the bandwidth of the noise is. THis
 %makes a interpretation harder.
-testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	100,	[1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
+% testExe(    'dsss', dataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	100,	[1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
 
 
 %FHSS tests
