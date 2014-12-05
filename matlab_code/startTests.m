@@ -27,7 +27,7 @@ chippingRateFHSS = chippingRateFHSS * dataRate;
 %absolute values
 chippingRateDSSS = [16, 32, 64, 96];
 chipLength = [16,64]; %must be at least 4
-repetitions = 2;
+repetitions = 5;
 maxNumberOfSenders = 200;
 gaussSNR = 10;
 %load or save random numbers, so the same numbers can be used for all
