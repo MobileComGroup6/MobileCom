@@ -1,5 +1,5 @@
 %%
-%clear all;
+clear all;
 close all;
 clc;
 ProjectSettings.verbose = true;
@@ -13,6 +13,7 @@ chippingRate = 64;
 pnGenerator = PNGenerator(3*12);
 sequence = pnGenerator.step();
 sender = Sender(medium, sequence, 'dsss', Fs, dataRate,chippingRate);
+sender.setGaussianSNR(10);
 
 jammer = Jammer(medium, Fs);
 
