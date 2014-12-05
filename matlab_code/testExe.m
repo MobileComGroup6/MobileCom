@@ -34,12 +34,19 @@ msgsSent = 0;
 configRan = 0;
 
 for chippingRate = chippingRates
+   
 	for chipLength = chipLengths
+        
         for jammingPara = 1:jammingParaLength
             testRepetition = 0;
                 for i = 1:repetitions 
                     %setup entities
-                    pnGenerator = PNGenerator(chipLength);
+                    if strcmp(mode,'fhss')
+                        pnGenerator = PNGenerator(3*chipLength);
+                    else
+                        pnGenerator = PNGenerator(chipLength);
+                    end
+                    
                     %the receiver and the FIRST sender get the same chip sequence
                     sequence = pnGenerator.step();
                     

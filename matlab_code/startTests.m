@@ -70,20 +70,20 @@ ProjectSettings.saveResultPlots(true);
 %FHSS tests
 
 %FHSS with multiple users
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     [1:1:15],	gaussSNR,	100,    0,          100,    randomNumbers,  repetitions, 'numSenders');
+%testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     [1:1:15],	gaussSNR,	100,    0,          100,    randomNumbers,  repetitions, 'numSenders');
 
 %FHSS with wideband noise, jamming frequency in middle of the channels with a bandwidth of all 8 channels
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,	[0:1:15],	1000,	randomNumbers,  repetitions, 'wideband');
+%testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,	[0:1:15],	1000,	randomNumbers,  repetitions, 'wideband');
 
 %FHSS narrowband
  %TODO: This is still weird!
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	[50:50:100+8*50],	30,	50,     randomNumbers,  repetitions, 'narrowband');
+testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	[5,[100:50:100+7*50]],	3,	50,     randomNumbers,  repetitions, 'narrowband');
 
 %FHSS with different bandwidthes
 %TODO: The SNR decreases, the wider the bandwidth of the noise is. THis
 %makes a interpretation harder.
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,          100,       [1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
+%testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,          100,       [1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
 
 
 %Different gaussian SNR
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          [-2:-1:-10],	300,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');
+%testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          [-2:-1:-10],	300,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');
