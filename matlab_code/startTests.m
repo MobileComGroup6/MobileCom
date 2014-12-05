@@ -77,7 +77,7 @@ ProjectSettings.saveResultPlots(true);
 
 %FHSS narrowband
  %TODO: This is still weird!
-testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	[5,[100:50:100+8*50]],	3,	50,     randomNumbers,  repetitions, 'narrowband');
+testExe(    'fhss', dataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	[5,[100:50:100+7*50]],	3,	50,     randomNumbers,  repetitions, 'narrowband');
 
 %FHSS with different bandwidthes
 %TODO: The SNR decreases, the wider the bandwidth of the noise is. THis
