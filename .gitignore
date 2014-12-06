@@ -10,4 +10,7 @@
 *.out
 *.snm
 *.toc
+*.m~
 /tex_code/report.pdf
+/matlab_code/output/
+*.orig
