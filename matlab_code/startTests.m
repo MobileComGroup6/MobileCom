@@ -29,7 +29,7 @@ chippingRateFHSS = chippingRateFHSS * DSSSdataRate;
 %absolute values
 chippingRateDSSS = [16, 32, 64, 96];
 chipLength = [16,64]; %must be at least 4
-repetitions = 10;
+repetitions = 2;
 maxNumberOfSenders = 200;
 gaussSNR = 10;
 %load or save random numbers, so the same numbers can be used for all
@@ -61,12 +61,15 @@ ProjectSettings.saveResultPlots(true);
 
 %DSSS narrowband
 %TODO: This is still weird!
-% testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:1:15],	16,     randomNumbers,  repetitions, 'narrowband');
+%testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[0:1:15],	16,     randomNumbers,  repetitions, 'narrowband');
 
 %DSSS with different bandwidthes
 %TODO: The SNR recreases, the wider the bandwidth of the noise is. THis
 %makes a interpretation harder.
 % testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	100,	[1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
+
+% DSSS with different bandwidths and powers
+%testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     1,          gaussSNR,	100,	[1.0, 2, 2.5, 3, 3.5, 6],	[8,16,32,64,128,256],  randomNumbers,  repetitions, 'bandwidthAndPower');
 
 
 %FHSS tests
@@ -79,12 +82,14 @@ ProjectSettings.saveResultPlots(true);
 
 %FHSS narrowband
  %TODO: This is still weird!
-testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	[0,[100:128:100+7*128]],	2.5,	64,     randomNumbers,  repetitions, 'narrowband');
+%testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	[0,[100:128:100+7*128]],	2.5,	64,     randomNumbers,  repetitions, 'narrowband');
 
 %FHSS with different bandwidthes
 %TODO: The SNR decreases, the wider the bandwidth of the noise is. THis
 %makes a interpretation harder.
 %testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,          100,       [1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
+
+testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	100,	[1.0, 2, 2.5, 3, 3.5, 6],	[8,16,32,64,128,256],  randomNumbers,  repetitions, 'bandwidthAndPower');
 
 
 %Different gaussian SNR

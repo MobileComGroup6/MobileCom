@@ -14,6 +14,10 @@ elseif length(freqs) == 1 && length(powers) > 1 && length(bandwidths) == 1 && le
 elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) > 1 && length(numberOfSenders) == 1 && length(gaussSNR) == 1
     jammingMode = 'bandwidth';
     jammingParaLength = length(bandwidths);
+elseif length(freqs) == 1 && length(powers) > 1 && length(bandwidths) > 1 && length(numberOfSenders) == 1 && length(gaussSNR) == 1
+		jammingMode = 'bandwidthAndPower';
+		assert(length(bandwidths)==length(powers));
+		jammingParaLength = length(bandwidths);
 elseif length(freqs) == 1 && length(powers) == 1 && length(bandwidths) == 1 && length(numberOfSenders) > 1 && length(gaussSNR) == 1
     jammingMode = 'numberOfSenders';
     jammingParaLength = length(numberOfSenders);
@@ -71,6 +75,12 @@ for chippingRate = chippingRates
                     elseif strcmp(jammingMode,'bandwidth')
                         freq = freqs;
                         power = powers;
+                        bandwidth = bandwidths(jammingPara);
+                        numberOfSender = numberOfSenders;
+                        snr = gaussSNR;
+										elseif strcmp(jammingMode, 'bandwidthAndPower')
+												freq = freqs;
+                        power = powers(jammingPara);
                         bandwidth = bandwidths(jammingPara);
                         numberOfSender = numberOfSenders;
                         snr = gaussSNR;
@@ -154,7 +164,7 @@ for i = 1:length(chippingRates)
         elseif strcmp(jammingMode,'power')
         	X = testResults(4,start:ende);
             x = 'Amplification factor of noise';
-        elseif strcmp(jammingMode,'bandwidth')
+        elseif strcmp(jammingMode,'bandwidth') || strcmp(jammingMode,'bandwidthAndPower')
             X = testResults(5,start:ende);
             x = 'Noise bandwidth (Hz)';
         elseif strcmp(jammingMode,'numberOfSenders')
