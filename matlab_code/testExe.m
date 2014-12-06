@@ -140,6 +140,7 @@ for chippingRate = chippingRates
                 testResults(:,configRan+1) = [ chippingRate, chipLength, jammingPara, power, bandwidth, numberOfSender, snr, meanBitError, relativeMeanBitError];
                 receivedData = zeros(size(receivedData));
                 configRan = configRan+1;
+                disp(['Test configuration done', num2str(configRan), 'using chippingRates:', num2str(chippingRate),', chipLengths:',num2str(chipLength)]);
         end
             
        
