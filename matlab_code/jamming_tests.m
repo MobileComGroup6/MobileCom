@@ -2,12 +2,12 @@
 clear all;
 close all;
 clc;
-ProjectSettings.verbose = true;
+ProjectSettings.verbose(true);
 Fs = 4096;
 
 medium = Medium;
 
-dataRate = 4;
+dataRate = 8;
 chippingRate = 64;
 
 pnGenerator = PNGenerator(3*12);
@@ -17,21 +17,54 @@ sender.setGaussianSNR(10);
 
 jammer = Jammer(medium, Fs);
 
-test_data = randi([0,1],100,1);
+test_data = randi([0,1],128,1);
 
 sender.send(test_data);
 
-jammer.jam(100, 16 , 2.5); %frequency, bandwidth (power of 2 optimally), power in multiples of standard output
-
+jammer.jam(100, 8 , 1)
 
 receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
 
 received = receiver.receive();
 
-
-
-biterrors = sum(abs(test_data-received))
+biterrors = sum(abs(test_data-received));
 assert(isequal(test_data, received));
+%% Test different bandwidths and powers
+close all;
+
+numRep = 5;
+medium.clear();
+
+powers = [0.5, 2, 3, 4, 5, 6];
+bandwidths = [8, 16, 32, 64, 128, 256];
+
+ProjectSettings.verbose(false);
+
+ber = zeros(numRep,6);
+for i=1:6
+	for r=1:numRep
+		sender.send(test_data);
+		
+		jammer.jam(100, bandwidths(i), powers(i));
+		
+		receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
+		
+		received = receiver.receive();
+		
+		medium.clear();
+		
+		biterrors = sum(abs(test_data-received));
+		ber(r, i) = biterrors;
+	end
+	
+end
+
+close all;
+avg = mean(ber);
+figure;
+plot(bandwidths, avg);
+
+
 
 
 
