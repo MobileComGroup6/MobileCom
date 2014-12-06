@@ -54,6 +54,7 @@ ProjectSettings.saveResultPlots(true);
 %DSSS Tests
 
 %DSSS with multiple users
+
 testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     [1:1:15],   gaussSNR,   100,	0,          100,	randomNumbers,  repetitions, 'numSenders');
 
 % DSSS with wideband noise
@@ -78,7 +79,9 @@ testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     1,      
 testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     [1:1:15],	gaussSNR,	100,    0,          100,    randomNumbers,  repetitions, 'numSenders');
 
 %FHSS with wideband noise, jamming frequency in middle of the channels with a bandwidth of all 8 channels
-testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,	[0:1:15],	1000,	randomNumbers,  repetitions, 'wideband');
+
+
+testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	550,	[2:0.5:4],	1000,	randomNumbers,  repetitions, 'wideband');
 
 %FHSS narrowband
  %TODO: This is still weird!
@@ -87,10 +90,17 @@ testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,      
 %FHSS with different bandwidthes
 %TODO: The SNR decreases, the wider the bandwidth of the noise is. THis
 %makes a interpretation harder.
-testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	300,          100,       [1,5,10,20,100,500,1000],  randomNumbers,  repetitions, 'bandwidth');
+
+testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	612,          2.5,       [4,8,16,128,512,1024],  randomNumbers,  repetitions, 'bandwidth');
+
 
 testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          gaussSNR,	100,	[1.0, 2, 2.5, 3, 3.5, 6],	[8,16,32,64,128,256],  randomNumbers,  repetitions, 'bandwidthAndPower');
 
 
 %Different gaussian SNR
-testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          [-2:-1:-10],	300,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');
+
+testExe(    'fhss', FHSSdataRate,   chippingRateFHSS,   chipLength,     1,          [-2:-1:-10],	612,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');
+
+
+testExe(    'dsss', DSSSdataRate,   chippingRateDSSS,   chipLength,     1,          [-8:-1:-30],	100,          0,       100,  randomNumbers,  repetitions, 'gaussianSNR');
+

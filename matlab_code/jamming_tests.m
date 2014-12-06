@@ -8,7 +8,7 @@ Fs = 4096;
 medium = Medium;
 
 dataRate = 8;
-chippingRate = 32;
+chippingRate = 4;
 
 pnGenerator = PNGenerator(16*3);
 sequence = pnGenerator.step();
@@ -21,8 +21,8 @@ test_data = randi([0,1],128,1);
 
 sender.send(test_data);
 
-jammer.jam(100, 64 , 2.5); %frequency, bandwidth (power of 2 optimally), power in multiples of standard output
-jammer.jam(100+128*1, 64 , 2.5);
+jammer.jam(612, 4 , 2); %frequency, bandwidth (power of 2 optimally), power in multiples of standard output
+%jammer.jam(100+128*1, 64 , 2.5);
 %jammer.jam(100+128*2, 64 , 2.5);
 %jammer.jam(100+128*3, 64 , 2.5);
 %jammer.jam(100+128*4, 64 , 3);
@@ -44,7 +44,7 @@ numRep = 5;
 medium.clear();
 
 powers = [0.5, 2, 3, 4, 5, 6];
-bandwidths = [8, 16, 32, 64, 128, 256];
+bandwidths = [1000];
 
 ProjectSettings.verbose(false);
 
@@ -53,7 +53,7 @@ for i=1:6
 	for r=1:numRep
 		sender.send(test_data);
 		
-		jammer.jam(100, bandwidths(i), powers(i));
+		jammer.jam(550, bandwidths(1), powers(i));
 		
 		receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
 		
@@ -61,7 +61,7 @@ for i=1:6
 		
 		medium.clear();
 		
-		biterrors = sum(abs(test_data-received));
+		biterrors = sum(abs(test_data-received))/size(test_data,1)
 		ber(r, i) = biterrors;
 	end
 	
