@@ -111,7 +111,9 @@ for chippingRate = chippingRates
                     
                     %jam on different frequencies or with different power
                     for f = freq
-                        jammer.jam(f, bandwidth, power);
+                        if f>0
+                            jammer.jam(f, bandwidth, power);
+                        end
                     end
 
                     receivedData(:,testRepetition+1) = receiver.receive();
@@ -128,10 +130,10 @@ for chippingRate = chippingRates
                 testResults(:,configRan+1) = [ chippingRate, chipLength, jammingPara, power, bandwidth, numberOfSender, snr, meanBitError, relativeMeanBitError];
                 receivedData = zeros(size(receivedData));
                 configRan = configRan+1;
-            end
+        end
             
        
-	end
+end
 end
 %% output
 % testResults

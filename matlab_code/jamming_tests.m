@@ -1,5 +1,5 @@
 %%
-clear all;
+%clear all;
 close all;
 clc;
 ProjectSettings.verbose(true);
@@ -8,11 +8,11 @@ Fs = 4096;
 medium = Medium;
 
 dataRate = 8;
-chippingRate = 64;
+chippingRate = 32;
 
 pnGenerator = PNGenerator(16*3);
 sequence = pnGenerator.step();
-sender = Sender(medium, sequence, 'dsss', Fs, dataRate,chippingRate);
+sender = Sender(medium, sequence, 'fhss', Fs, dataRate,chippingRate);
 sender.setGaussianSNR(10);
 
 jammer = Jammer(medium, Fs);
@@ -21,20 +21,21 @@ test_data = randi([0,1],128,1);
 
 sender.send(test_data);
 
-jammer.jam(5, 5 , 3); %frequency, bandwidth (power of 2 optimally), power in multiples of standard output
-%jammer.jam(150, 50 , 3);
-%jammer.jam(200, 50 , 2);
-%jammer.jam(250, 50 , 2);
-%jammer.jam(300, 50 , 2);
-%jammer.jam(350, 50 , 2);
-%jammer.jam(400, 50 , 2);
+jammer.jam(100, 64 , 2.5); %frequency, bandwidth (power of 2 optimally), power in multiples of standard output
+jammer.jam(100+128*1, 64 , 2.5);
+%jammer.jam(100+128*2, 64 , 2.5);
+%jammer.jam(100+128*3, 64 , 2.5);
+%jammer.jam(100+128*4, 64 , 3);
+%jammer.jam(100+128*5, 64 , 3);
+%jammer.jam(100+128*6, 64 , 3);
+%jammer.jam(100+128*7, 64 , 3);
 
 
-receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
+receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
 
 received = receiver.receive();
 
-biterrors = sum(abs(test_data-received));
+biterrors = sum(abs(test_data-received))/size(test_data,1)
 assert(isequal(test_data, received));
 %% Test different bandwidths and powers
 close all;
@@ -54,7 +55,7 @@ for i=1:6
 		
 		jammer.jam(100, bandwidths(i), powers(i));
 		
-		receiver = Receiver(medium, sequence, 'dsss', Fs, dataRate, chippingRate);
+		receiver = Receiver(medium, sequence, 'fhss', Fs, dataRate, chippingRate);
 		
 		received = receiver.receive();
 		

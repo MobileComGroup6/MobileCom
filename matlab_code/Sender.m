@@ -67,7 +67,8 @@ classdef Sender < SendingNode
 				for i = 0:chipNum-1
 					part = mData(i*chipLength+1:(i+1)*chipLength);
 					channel = channels(i+1);
-					partModulated = pmmod(double(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
+                    frequency = self.CarrierFrequency + (channel * self.bandwidth);
+					partModulated = pmmod(double(part),frequency, self.SampleRate, pi/2);
 					toSend = [toSend;partModulated];
 				end
 				%send data

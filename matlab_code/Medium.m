@@ -67,7 +67,7 @@ classdef Medium < handle %handle is superclass and provides event machanisms
 				
 				fft_vis = abs(self.Data)/self.NFFT;
 				fft_vis = fft_vis(1:self.NFFT/2+1);
-				plot(faxis(1:100000), fft_vis(1:100000)); title('Data on Medium');
+				plot(faxis(1:300000), fft_vis(1:300000)); title('Data on Medium');
 				xlabel('Frequency (Hz)');
 			end
 		end

@@ -55,7 +55,25 @@ classdef Receiver < Node
 					part = mData(i*chipLength+1:(i+1)*chipLength);
 					channel = channels(i+1);
 					partDemodulated = pmdemod(real(part),self.CarrierFrequency + channel * self.bandwidth, self.SampleRate, pi/2);
-					demodulated = [demodulated;partDemodulated];
+                    %randBias = rand/10;
+                    %this creates a random decision if we later have equal
+                    %amounts of 1 and 0-valued chips
+                    partEstimation = (mean(partDemodulated));
+                    biasedPartEstimation = partEstimation;
+                    if partEstimation >0.7
+                        biasedPartEstimation = 1;
+                    end
+                    if partEstimation<0.3
+                        biasedPartEstimation = 0;
+                    end
+                    
+                    
+                    partFinished = repmat(biasedPartEstimation,length(partDemodulated),1);
+                    if self.ChippingRate>self.DataRate
+                        demodulated = [demodulated;partFinished];
+                    else
+                        demodulated = [demodulated;partDemodulated];
+                    end
 				end
 				
 				if ProjectSettings.verbose
