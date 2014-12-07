@@ -1,14 +1,12 @@
 \section{Conclusion}
-    In this project we did a simulation of the spreading techniques \emph{Direct Sequence Spread Spectrum (DSSS)} and \emph{Frequency Hopping Spread Spectrum (FHSS)}.\\
     
     
-    The simulation is implemented in object oriented Matlab. It includes support to simulate noise on the medium and jamming of different frequencies. Our goal was to see which of the both schemes is more robust against different kinds of noise.\\
+    Due to the different bandwidths both techniques use, a direct comparison is not straightforward. We can, however, state that DSSS reaches the same performance in multiuser scenarios as our FHSS implementation while using a chipping rate of 16, which means a bandwidth of 32 Hz, where FHSS employed 1024 Hz. Our DSSS implementation also performed better in our "real-life noise" test and was more robust to Gaussian noise. FHSS, however, performed better in narrowband interference test scenario and is more practical to scale up to more users.
+    
+    In conclusion, we should have rediscussed using FSK for fast-hopping FHSS, as we think we could not properly show the potential of this technique.
     
     
-    TODO: Summarize results\\
+    Further work could include support for simulation of free-space path loss. The distance between the sender and the receiver would then influence the quality of the signal. Additionally we could extend the free-space path loss by using a custom propagation coefficient to simulate more complex environments like buildings and other obstacles that prevent direct line of sight.
     
     
-    Further work could include support for simulation of free-space path loss. The distance between the sender and the receiver would then influence the quality of the signal. Additionally one could extend the free-space path loss by using a custom propagation coefficient to simulate more complex environments like buildings and other obstacles that prevent direct line of sight.
-    
-    
-    Another future work could be to not only measure bit-error rates but also introduce a packet-error rate. To support this one would first need to decide how a packet should be defined. One possibility is to combine a fixed amount of bits to a packet, or send a special bit sequence to announce the begin of a new packet.
+    Another project could be to not only measure bit-error rates, but also introduce a packet-error rate. To support this we would first need to decide how a packet should be defined. One possibility would be to combine a fixed amount of bits to a packet or send a special bit sequence to announce the beginning of a new packet.

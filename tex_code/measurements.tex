@@ -59,7 +59,7 @@
 	
 	\subsection{FHSS}
 	
-	Before going into the exact test cases, it is important to note that there is a problem with our implementation of fast frequency hopping, as it works badly with BPSK modulation. Various websites such as \cite{web-nl} emphasize the difficulty of using coherent data detection and that FSK is most often used. 
+	Before going into the exact test cases, it is important to note that there is a problem with our implementation of fast frequency hopping, as it works badly with BPSK modulation. Various websites such as \cite{web-nl} emphasize the difficulty of using coherent data detection and that FSK is most often used. However, we followed our requirements and implemented BPSK.
 		\subsubsection{Performance in presence of narrowband and wideband interference}~\\
 		
 		The results widely match expected behaviour, with performance deteriorating the more channels are jammed and wideband noise affecting all channels - and thus all configurations - equally. It is important to note that we were not able to create configurations where there was no crosstalk between the different channels, so this will have influenced all results.
