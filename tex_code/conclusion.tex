@@ -1,21 +1,19 @@
 \section{Conclusion}
 	Due to the different bandwidths both techniques use, a direct comparison is not straightforward.
     We can, however, state that DSSS reaches the same performance in multiuser scenarios as our FHSS implementation while using a chipping rate of 16. This corresponds to a bandwidth of 32 Hz, where FHSS employed 1024 Hz.
-    Our DSSS implementation also performed better in our "real-life noise" test and was more robust to Gaussian noise. %What is this real-life noise test? Reference.
-    FHSS performed better in narrowband interference test scenario and is more practical to scale up to more users.
+    Our DSSS implementation also performed better in our "real-life noise" test (See ``\nameref{sec:real-life}'') and was more robust to Gaussian noise.
+    FHSS performed better in our narrowband interference test scenario and is probably more flexible to scale up to more users.
     
-    We could have rediscussed FHSS using FSK for fast-hopping. We think we could not properly show the potential of this technique.
+    We could have rediscussed using FSK for fast-hopping in FHSS, as we think we could not properly show the potential of this technique with BPSK.
     
-    The implementation of the jammer has been challenging and though we tried more several different approaches, the result is not fully satisfying.
+    The implementation of the jammer has been challenging and though we tried several different approaches, the result is not fully satisfying.
     A way to jam a certain band using a certain SNR or power density spectrum would certainly be practical and would possibly yield better results.
-    But this was outside the time frame of this project.
-    We also lacked the background in signal processing to properly implement it.
+    But this was outside the time frame of this project and we also lack the background in signal processing to properly implement it.
     
-    Further work could include support for simulation of free-space path loss.
-    The distance between the sender and the receiver would then influence the quality of the signal.
+    Further work could include support for simulation of free-space path loss, where the distance between the sender and the receiver would influence the quality of the signal.
     Additionally we could extend the free-space path loss by using a custom propagation coefficient to simulate more complex environments like buildings and other obstacles that prevent direct line of sight.
     
     Another project could be to not only measure bit-error rates, but also introduce a packet-error rate.
     To support this we would first need to decide how a packet should be defined.
     One possibility would be to combine a fixed amount of bits to a packet or send a special bit sequence to announce the beginning of a new packet.
-    Then an error correction scheme would be necessary to discuss this approach.
+    Additionally, some sort of error correction scheme would be necessary to discuss this approach.
