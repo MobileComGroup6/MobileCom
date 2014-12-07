@@ -19,13 +19,13 @@
 					\centering
 				    \begin{subfigure}[b]{0.5\textwidth}
 						\includegraphics[width=\textwidth]{imgs/results/plot_mode_dsss-test_narrowband-rep_20-dataRate_8-dataLength_128.png}
-						\caption{Narrowband noise - 8 Hz}
+						\caption{Narrowband noise: $\Delta f= 8 \text{Hz}, f_{jam} = 100\text{Hz}$}
 						\label{fig:dsss_narrowband}
 					\end{subfigure}%
 					~
 					\begin{subfigure}[b]{0.5\textwidth}
 						\includegraphics[width=\textwidth]{imgs/results/plot_mode_dsss-test_wideband-rep_20-dataRate_8-dataLength_128.png}
-						\caption{Wideband noise - 200 Hz}
+						\caption{Wideband noise: $\Delta f = 200 \text{Hz}, f_{jam} = 100\text{Hz}$}
 						\label{fig:dsss_wideband}
 					\end{subfigure}
 				\end{figure}
@@ -45,7 +45,7 @@
 				\centering
 				\begin{subfigure}[b]{0.5\textwidth}
 					\includegraphics[width=\textwidth]{imgs/results/plot_mode_dsss-test_bandwidthAndPower-rep_20-dataRate_8-dataLength_128.png}
-					\caption{Various noise bandwidths and powers}
+					\caption{Various noise bandwidths and powers: $p_f = (1,2,2.5,3,3.5,4), \Delta f = (8,16,32,64,128,256)$}
 					\label{fig:dsss_bandwidth}
 				\end{subfigure}%
 				~
@@ -62,6 +62,7 @@
 			This matches the expected behaviour.
 				
 			\begin{figure}[H]
+			\centering
 				\includegraphics[width=0.5\textwidth]{imgs/results/plot_mode_dsss-test_numSenders-rep_20-dataRate_8-dataLength_128.png}
 				\caption{Multiuser}
 				\label{fig:dsss_multiuser}
@@ -79,13 +80,13 @@
 				\centering
 				\begin{subfigure}[b]{0.5\textwidth}
 					\includegraphics[width=\textwidth]{imgs/results/plot_mode_fhss-test_narrowband-rep_20-dataRate_8-dataLength_128.png}
-					\caption{Narrowband noise - 64 Hz}
+					\caption{Narrowband noise: $\Delta f= 64 \text{Hz}, p_f = 2.5$}
 					\label{fig:fhss_narrowband}
 				\end{subfigure}%
 				~
 				\begin{subfigure}[b]{0.5\textwidth}
 					\includegraphics[width=\textwidth]{imgs/results/plot_mode_fhss-test_wideband-rep_20-dataRate_8-dataLength_128.png}
-					\caption{Wideband noise - 1000 Hz}
+					\caption{Wideband noise: $\Delta f= 200 \text{Hz}, f_{jam} = 550\text{Hz}$}
 					\label{fig:fhss_wideband}
 				\end{subfigure}
 			\end{figure}
@@ -100,7 +101,7 @@
 				\centering
 				\begin{subfigure}[b]{0.5\textwidth}
 					\includegraphics[width=\textwidth]{imgs/results/plot_mode_fhss-test_bandwidthAndPower-rep_20-dataRate_8-dataLength_128.png}
-					\caption{Various noise bandwidth and power}
+					\caption{Various noise bandwidth and power: $p_f = (1,2,2.5,3,3.5,4), \Delta f = (8,16,32,64,128,256)$}
 					\label{fig:fhss_bandwidth}
 				\end{subfigure}%
 				~
@@ -113,7 +114,9 @@
 		
 		\subsubsection{Performance with multiple users}~\\
 			The results shown match the expected behaviour. The performance deteriorates quickly and bottoms at 40-50 \% BER when the number of users approaches the number of channels.
+			
 			\begin{figure}[H]
+			\centering
 				\includegraphics[width=0.5\textwidth]{imgs/results/plot_mode_fhss-test_numSenders-rep_20-dataRate_8-dataLength_128.png}
 				\caption{Multiuser}
 				\label{fig:fhss_multiuser}
