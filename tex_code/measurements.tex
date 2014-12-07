@@ -2,14 +2,14 @@
 	Using the test setup and cases shown above, we were able to gain the following insights.
 	\subsection{DSSS}
 		\subsubsection{Performance in presence of narrowband and wideband interference}~\\
-			Figure \ref{fig:dsss_narrowband} shows error rate of DSSS under narrowband noise. We observe that higher \emph{chipping rates} - which lead to broader spreading - add robustness.
+			Figure \ref{fig:dsss_narrowband} shows error rates of DSSS under the influence of narrowband noise. We observe that higher \emph{chipping rates} - which lead to broader spreading - add robustness.
 			This is due to the narrowband interference getting despread more strongly when employing higher chipping rates.
-			The \emph{chip sequence length} has little to no influence, which also matches our expectations, as the power spectrum does not change with different chip length. longer chip sequences do, hovewer, add support for more users.
+			The \emph{chip sequence length} has little to no influence, which also matches our expectations, as the power spectrum does not change with different chip length. Longer chip sequences do, hovewer, add support for more users.
 			
 			Figure \ref{fig:dsss_wideband} illustrates behaviour under the influence of wideband noise, which is nearly identical for all our different testing parameters.
 			We would intuitively have expected low \emph{chipping rates} to have better performance - due to their more narrow frequency spectrum and thus higher peak power - but this line of thought ignores that wideband noise is not correllated with the sent signal, and so does not get despread. Thus, it remains on the same power level after despreading, which results in the invariability of performance under changing parameters.
 			
-			Due to our testing setup and methodology, direct comparison between the two scenarios is tedious. As our jammer implementation puts out a constant base power when measuring over the whole spectrum, the SNRs tend to be very different for different scenarios. Because of that, we have chosen to regard narrowband and wideband noise as separate cases and do a comparison in a separate test case, where we tried to visually match the signal and noise spectra of the scenarios outlined in \cite{ISS}. The results of that test are shown in \ref{fig:dsss_bandwidth} and discussed in the next section.
+			Due to our testing setup and methodology, direct comparison between the two scenarios is tedious. As our jammer implementation puts out a constant base power when measured over the whole spectrum, the SNRs tend to vary a lot for different scenarios. Because of that, we have chosen to regard narrowband and wideband noise as separate cases and do a comparison in a separate test case, where we tried to visually match the signal and noise spectra of the scenarios outlined in \cite{ISS}. The results of that test are shown in \ref{fig:dsss_bandwidth} and discussed in the next section.
 				\begin{figure}[H]
 					\centering
 					\caption{}
@@ -71,7 +71,7 @@
 		
 		\subsubsection{Performance in presence of narrowband and wideband interference}~\\
 			The results widely match expected behaviour, with performance deteriorating the more channels are jammed and wideband noise affecting all channels - and thus all configurations - equally.
-			Importantly, we were not able to create configurations where without crosstalk between the different channels, so this will have influenced all results.
+			Importantly, we were not able to create configurations without crosstalk between the different channels, so this will have influenced all results.
 			
 			\begin{figure}[H]
 				\centering
