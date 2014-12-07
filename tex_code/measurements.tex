@@ -2,26 +2,34 @@
 
 	\subsection{DSSS}
 	
-		\subsubsection{Performance in presence of narrowband and wideband interference}
-		asdfasd		
+		\subsubsection{Performance in presence of narrowband and wideband interference}~\\
+
+	Looking at figure \ref{fig:dsss_narrowband}, which shows error behaviour of our DSSS implemenentation under the influence of narrowband noise, we can see that generally speaking, high chipping rates - so broad spreading - show more robustness in this scenario than low chipping rates. This is expected behaviour, as the narrowband interference gets despread more strongly when employing higher chipping rates. The chip sequence length does not seem to have any relevant influence, which also matches the behaviour we expected, as the power spectrum does not change with different chip length, assuming it is above a certain value needed for spreading to work properly.
+	
+	Figure \ref{fig:dsss_wideband} illustrates behaviour under wideband noise, which is nearly identical for all our different testing parameters. We would intuitively have expected low chipping rates to have better performance - due to their more narrow frequency spectrum and thus higher peak power - but this line of thought does not take into account that wideband noise is not correllated with the sent signal, and so does not get despread. Thus, it remains on the same power level after despreading, which results in the invariability of performance under changing parameters.
+	
+	Due to our testing setup and methodology, direct comparison between the two scenarios is tedious. As our jammer implementation puts out a constant base power when measuring over the whole spectrum, the SNRs tend to be very different for different scenarios. Because of that, we have chosen to regard narrowband and wideband noise as separate cases and do a comparison in a separate test case, where we tried to visually match the signal and noise spectra of the scenarios outlined in \cite{ISS}. The results of that test are shown in \ref{fig:dsss_bandwidth} and discussed in the next section.
 		\begin{figure}[H]
 			\centering
 		    \begin{subfigure}[b]{0.5\textwidth}
 				\includegraphics[width=\textwidth]{imgs/results/plot_mode_dsss-test_narrowband-rep_20-dataRate_8-dataLength_128.png}
-				\caption{Narrowband noise}
+				\caption{Narrowband noise - 8 Hz}
 				\label{fig:dsss_narrowband}
 			\end{subfigure}%
 			~
 			\begin{subfigure}[b]{0.5\textwidth}
 				\includegraphics[width=\textwidth]{imgs/results/plot_mode_dsss-test_wideband-rep_20-dataRate_8-dataLength_128.png}
-				\caption{Wideband noise}
+				\caption{Wideband noise - 200 Hz}
 				\label{fig:dsss_wideband}
 			\end{subfigure}
 		\end{figure}
 		
 		
-		\subsubsection{Performance with varying interference bandwidth and white Gaussian noise}
-		asdasdf
+		\subsubsection{Performance with varying interference bandwidth and white Gaussian noise}~\\
+		
+	In figure \ref{fig:dsss_bandwidth}, we can see the results of the aforementioned test case, with wideband noise having a bigger impact than narrowband noise and high chipping rates showing better performance than low ones. While we are very aware that the parameters for this configuration may seem arbitrary, we struggled to find reliable reference values for such scenarios. The result of this is that the results shown should be seen as a qualitative estimation of real-world performance of DSSS under presumably realistic levels and bandwidths of interference and not as exact values. 
+	
+	Figure \ref{fig:dsss_gaussian} outlines performance of our DSSS implementation with varying levels of white Gaussian noise. The results widely match expected behaviour, with performance deteriorating with more added noise. Unexpectedly, performance was worse when employing low chipping rates. We suspect this may be due to the way Matlab measures the SNR when using the awgn function.
 	
 		\begin{figure}[H]
 			\centering
@@ -38,8 +46,9 @@
 			\end{subfigure}
 		\end{figure}		
 		
-		\subsubsection{Performance with multiple users}
-		asdfasdf
+		\subsubsection{Performance with multiple users}~\\
+		
+		In figure \ref{fig:dsss_multiuser} we can easily see that low chipping rates work considerably worse than high chipping rates, as the signal is spread less. This matches expected behaviour. 
 		\begin{figure}[H]
 			\includegraphics[width=0.5\textwidth]{imgs/results/plot_mode_dsss-test_numSenders-rep_20-dataRate_8-dataLength_128.png}
 			\caption{Multiuser}
@@ -50,8 +59,11 @@
 	
 	\subsection{FHSS}
 	
-		\subsubsection{Performance in presence of narrowband and wideband interference}
-		asdfasd		
+	Before going into the exact test cases, it is important to note that there is a problem with our implementation of fast frequency hopping, as it works badly with BPSK modulation. Various websites such as \cite{web-nl} emphasize the difficulty of using coherent data detection and that FSK is most often used. 
+		\subsubsection{Performance in presence of narrowband and wideband interference}~\\
+		
+		The results widely match expected behaviour, with performance deteriorating the more channels are jammed and wideband noise affecting all channels - and thus all configurations - equally. It is important to note that we were not able to create configurations where there was no crosstalk between the different channels, so this will have influenced all results.
+		
 		\begin{figure}[H]
 			\centering
 			\begin{subfigure}[b]{0.5\textwidth}
@@ -68,8 +80,9 @@
 		\end{figure}
 		
 		
-		\subsubsection{Performance with varying interference bandwidth and white Gaussian noise}
-		asdasdf
+		\subsubsection{Performance with varying interference bandwidth and white Gaussian noise}~\\
+		
+		The results shown in figure \ref{fig:fhss_bandwidth} again represent an estimation of performance under different - and presumably realistic - noise configurations. The results are quite similar to the ones from DSSS, with better performance under the influence of narrowband interference. Figure \ref{fig:fhss_gaussian} shows a much more streamlined result than DSSS, which is caused by the bandwidths and channel configurations being invariable under the different parameter configurations.
 	
 		\begin{figure}[H]
 			\centering
@@ -86,8 +99,9 @@
 			\end{subfigure}
 		\end{figure}
 		
-		\subsubsection{Performance with multiple users}
-		asdfasdf
+		\subsubsection{Performance with multiple users}~\\
+		
+		The results shown match expected behaviour, with performance deteriorating quite quickly and bottoming at 40-50 \% BER when the number of users approaches the number of channels.
 		\begin{figure}[H]
 			\includegraphics[width=0.5\textwidth]{imgs/results/plot_mode_fhss-test_numSenders-rep_20-dataRate_8-dataLength_128.png}
 			\caption{Multiuser}
