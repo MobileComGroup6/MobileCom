@@ -3,7 +3,7 @@
 	\emph{Spread  Spectrum} is a procedure to spread a transmission over a wider frequency range. The goal is robustness and support for parallel transmissions.
 	Refer to \cite{ISS} for more details.
 	
-	Both, \emph{FHSS} and \emph{DSSS} require the sender and receiver to be time-synchronized. 
+	Both, \emph{FHSS} and \emph{DSSS}, require the sender and receiver to be time-synchronized. 
 	
 	\subsection{Frequency Hopping Spread Spectrum}
 		In \emph{FHSS} the frequency band $f$ is split into $N$ sub-bands $f_1,..., f_N$. Each sender gets a pseudo-random chip sequence $p_n \in [f_1,...,f_N]^n$ which is known by the sender and the receiver only.
@@ -13,12 +13,12 @@
 		
 		\paragraph{Fast hopping} In this case the symbol time $T_s$ is a multiple of the dwell time $T_h$. During the transmission of one symbol, one or multiple hops are made. So one symbol is transmitted on multiple frequencies.
 		
-		\paragraph{Interference} FHSS is very robust under narrow-band interference. If one sub-channel is jammed, this will only affect part of the transmission. Any other user using the same FHSS scheme will appear as narrow-band interference.
-		Broad-band interference can not be easily dealt with.
+		\paragraph{Interference} FHSS is very robust under narrow-band interference. If one sub-channel is jammed, this will only affect part of the transmission. Any other user sending with the same FHSS scheme will appear as narrow-band interference.
+		Broad-band interference can not be dealt with easily.
 		
 	
 	\subsection{Direct Sequence Spread Spectrum}
-		Each sender has a chip sequence $p_n \in \{-1,1\}^n, \sum p_n = 1$ known the sender and receiver only. The chip-rate $R_c$ is a multiple of the signal-rate $R_s$.
+		Each sender has a chip sequence $p_n \in \{-1,1\}^n, \sum p_n = 1$ known by the sender and receiver only. The chip-rate $R_c$ is a multiple of the signal-rate $R_s$.
 		
 		\paragraph{Spreading} Before sending the data sequence $d_t$, it is multiplied point-wise with the chip-pattern resulting in the transmission data $t_x = d_t p_n$.
 		Image \ref{dsss} shows an example of these steps.
